@@ -6,6 +6,7 @@ Project in a database course at the Université de Technologie de Compiègne : c
 * [Apprendre à utiliser Github](https://humantalks.com/talks/620-git-vous-ne-pourrez-plus-vous-en-passer)
 * [Paramétrer psql au premier lancement](http://stackoverflow.com/questions/1471571/how-to-configure-postgresql-for-the-first-time)
 * [Dillinger](http://dillinger.io/) pour faire un joli MakeDown file :)
+* [Bootstrap](http://getbootstrap.com/examples/theme/) : une page d'exemple du style, copiez les classes pour faire jouli. Ya meme un carrousel, trop stylé :)
 
 ## Installation
 * Paquets à installer :
