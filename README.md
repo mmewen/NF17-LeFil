@@ -29,3 +29,5 @@ Comme ça vous aurez accès au site en faisant : `127.0.0.1/nf17` :)
 * Pensez bien à faire un `chmod` de tous les dossiers parents de votre dossier nf17 où other n'a pas de droit 'r', forcément ^^
 * Ajoutez un utilisateur dans la BDD avec le liens au dessus
 * Si votre PHP n'imprime pas les erreurs dans le HTML, modifiez le fichier `php.ini` de votre système en mettant `display_startup_errors` et `display_errors` à `On`
+
+J'apprends à utiliser git :)
