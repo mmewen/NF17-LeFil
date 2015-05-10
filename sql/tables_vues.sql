@@ -101,7 +101,7 @@ CREATE TABLE Image (
 CREATE TABLE Texte (
 	texte_id SERIAL PRIMARY KEY,
 	texte_titre VARCHAR(50) UNIQUE NOT NULL,
-	texte_article SERIAL NOT NULL REFERENCES Article(article_id),
+	texte_article INTEGER NOT NULL REFERENCES Article(article_id),
 	texte_corps TEXT 
 );
 
@@ -116,8 +116,8 @@ CREATE TYPE enum_statut AS ENUM (
 
 CREATE TABLE Statut (
 	statut_type ENUM_STATUT PRIMARY KEY,
-	statut_createur SERIAL NOT NULL REFERENCES Editeur(editeur_id),
-	statut_datecreattion TIMESTAMP NOT NULL
+	statut_createur INTEGER NOT NULL REFERENCES Editeur(editeur_id),
+	statut_datecreation TIMESTAMP NOT NULL
 ); --Je comprends pas cette table
 
 \echo 'Statut'
@@ -137,10 +137,10 @@ CREATE TABLE Commentaire (
 	commentaire_enExergue BOOLEAN,
 	commentaire_masque BOOLEAN,
 	commentaire_supprime BOOLEAN,
-	commentaire_createur SERIAL NOT NULL REFERENCES Lecteur(lecteur_id),
-	commentaire_article SERIAL NOT NULL REFERENCES Article(article_id),
+	commentaire_createur INTEGER NOT NULL REFERENCES Lecteur(lecteur_id),
+	commentaire_article INTEGER NOT NULL REFERENCES Article(article_id),
 	commentaire_datecreation TIMESTAMP NOT NULL,
-	commentaire_datesuppression TIMESTAMP NOT NULL
+	commentaire_datesuppression TIMESTAMP
 );
 
 \echo 'Commentaire'
@@ -148,7 +148,7 @@ CREATE TABLE Commentaire (
 CREATE TABLE MotsClefs (
 	motsclefs_id SERIAL PRIMARY KEY,
 	motsclefs_corps VARCHAR(20) UNIQUE NOT NULL,
-	motsclefs_editeur SERIAL NOT NULL REFERENCES Editeur(editeur_id),
+	motsclefs_editeur INTEGER NOT NULL REFERENCES Editeur(editeur_id),
 	motsclefs_datecreation TIMESTAMP NOT NULL
 );
 
@@ -159,11 +159,11 @@ CREATE TABLE MotsClefs (
 /* HISTORIQUE ACTION AUTEUR */
 
 CREATE TABLE Modifier_Statut_Auteur (
-	modifstataut_id SERIAL PRIMARY KEY,
-	modifstataut_datemodif TIMESTAMP NOT NULL,
-	modifstataut_auteur SERIAL NOT NULL REFERENCES Auteur(auteur_id),
-	modifstataut_article SERIAL NOT NULL REFERENCES Article(article_id),
-	modifstataut_statut ENUM_STATUT NOT NULL REFERENCES Statut(statut_type)
+	modifstatut_id SERIAL PRIMARY KEY,
+	modifstatut_datemodif TIMESTAMP NOT NULL,
+	modifstatut_auteur INTEGER NOT NULL REFERENCES Auteur(auteur_id),
+	modifstatut_article INTEGER NOT NULL REFERENCES Article(article_id),
+	modifstatut_statut ENUM_STATUT NOT NULL REFERENCES Statut(statut_type)
 );
 
 \echo 'Modifier_Statut_Auteur'
@@ -175,16 +175,17 @@ CREATE TABLE Modifier_Statut_Auteur (
 CREATE TABLE Supprimer_Commentaire (
 	suppcomm_id SERIAL PRIMARY KEY,
 	suppcomm_datesupp TIMESTAMP NOT NULL,
-	suppcomm_commentaire SERIAL NOT NULL REFERENCES Commentaire(commentaire_id),
-	suppcomm_moderateur SERIAL NOT NULL REFERENCES Moderateur(moderateur_id)
+	suppcomm_commentaire INTEGER NOT NULL REFERENCES Commentaire(commentaire_id),
+	suppcomm_moderateur INTEGER NOT NULL REFERENCES Moderateur(moderateur_id)
 );
 
 \echo 'Supprimer_Commentaire'
 
 CREATE TABLE Mettre_Exergue_Commentaire (
 	miseexcom_id SERIAL PRIMARY KEY,
-	miseexcom_commentaire SERIAL NOT NULL REFERENCES Commentaire(commentaire_id),
-	miseexcom_moderateur SERIAL NOT NULL REFERENCES Moderateur(moderateur_id)
+	miseexcom_datemiseex TIMESTAMP NOT NULL,
+	miseexcom_commentaire INTEGER NOT NULL REFERENCES Commentaire(commentaire_id),
+	miseexcom_moderateur INTEGER NOT NULL REFERENCES Moderateur(moderateur_id)
 );
 
 \echo 'Mettre_Exergue_Commentaire'
@@ -195,9 +196,9 @@ CREATE TABLE Mettre_Exergue_Commentaire (
 
 CREATE TABLE Mettre_A_Honneur (
 	misehonneur_id SERIAL PRIMARY KEY,
-	misehonneur_editeur SERIAL NOT NULL REFERENCES Editeur(editeur_id),
-	misehonneur_article SERIAL NOT NULL REFERENCES Article(article_id),
-	misehonneur_datemisehonneur TIMESTAMP NOT NULL
+	misehonneur_datemisehonneur TIMESTAMP NOT NULL,
+	misehonneur_editeur INTEGER NOT NULL REFERENCES Editeur(editeur_id),
+	misehonneur_article INTEGER NOT NULL REFERENCES Article(article_id)
 );
 
 \echo 'Mettre_A_Honneur'
@@ -205,9 +206,9 @@ CREATE TABLE Mettre_A_Honneur (
 CREATE TABLE Associer_Article_Rubrique (
 	assocartrub_id SERIAL PRIMARY KEY,
 	assocartrub_dateassoc TIMESTAMP NOT NULL,
-	assocartrub_article SERIAL NOT NULL REFERENCES Article(article_id),
-	assocartrub_rubrique SERIAL NOT NULL REFERENCES Rubrique(rubrique_id),
-	assocartrub_editeur SERIAL NOT NULL REFERENCES Editeur(editeur_id)
+	assocartrub_article INTEGER NOT NULL REFERENCES Article(article_id),
+	assocartrub_rubrique INTEGER NOT NULL REFERENCES Rubrique(rubrique_id),
+	assocartrub_editeur INTEGER NOT NULL REFERENCES Editeur(editeur_id)
 );
 
 \echo 'Associer_Article_Rubrique'
@@ -215,9 +216,9 @@ CREATE TABLE Associer_Article_Rubrique (
 CREATE TABLE Modifier_Statut_Editeur (
 	modifstatedit_id SERIAL PRIMARY KEY,
 	modifstatedit_datemodif TIMESTAMP NOT NULL,
-	modifstatedit_editeur SERIAL NOT NULL REFERENCES Editeur(editeur_id),
+	modifstatedit_editeur INTEGER NOT NULL REFERENCES Editeur(editeur_id),
 	modifstatedit_statut ENUM_STATUT NOT NULL REFERENCES Statut(statut_type),
-	modifstatedit_article SERIAL NOT NULL REFERENCES Article(article_id)
+	modifstatedit_article INTEGER NOT NULL REFERENCES Article(article_id)
 );
 
 \echo 'Modifier_Statut_Editeur'
@@ -225,9 +226,9 @@ CREATE TABLE Modifier_Statut_Editeur (
 CREATE TABLE Associer_Article_Article (
 	assocartart_id SERIAL PRIMARY KEY,
 	assocartart_dateassoc TIMESTAMP NOT NULL,
-	assocartart_article1 SERIAL NOT NULL REFERENCES Article(article_id),
-	assocartart_article2 SERIAL NOT NULL REFERENCES Article(article_id),
-	assocartart_editeur SERIAL NOT NULL REFERENCES Editeur(editeur_id)
+	assocartart_article1 INTEGER NOT NULL REFERENCES Article(article_id),
+	assocartart_article2 INTEGER NOT NULL REFERENCES Article(article_id),
+	assocartart_editeur INTEGER NOT NULL REFERENCES Editeur(editeur_id)
 );
 
 \echo 'Associer_Article_Article'
@@ -235,9 +236,9 @@ CREATE TABLE Associer_Article_Article (
 CREATE TABLE Indexer_Article (
 	indexart_id SERIAL PRIMARY KEY,
 	indexart_dateindex TIMESTAMP NOT NULL,
-	indexart_motclef SERIAL NOT NULL REFERENCES MotsClefs(motsclefs_id),
-	indexart_editeur SERIAL NOT NULL REFERENCES Editeur(editeur_id),
-	indexart_article SERIAL NOT NULL REFERENCES Article(article_id)
+	indexart_motclef INTEGER NOT NULL REFERENCES MotsClefs(motsclefs_id),
+	indexart_editeur INTEGER NOT NULL REFERENCES Editeur(editeur_id),
+	indexart_article INTEGER NOT NULL REFERENCES Article(article_id)
 );
 
 \echo 'Indexer_Article'
@@ -245,9 +246,9 @@ CREATE TABLE Indexer_Article (
 CREATE TABLE Associer_SousRubrique_Rubrique (
 	assocsrubrub_id SERIAL PRIMARY KEY,
 	assocsrubrub_dateassoc TIMESTAMP NOT NULL,
-	assocsrubrub_editeur SERIAL NOT NULL REFERENCES Editeur(editeur_id),
-	assocsrubrub_rubrique SERIAL NOT NULL REFERENCES Rubrique(rubrique_id),
-	assocsrubrub_sousrubrique SERIAL NOT NULL REFERENCES Rubrique(rubrique_id)
+	assocsrubrub_editeur INTEGER NOT NULL REFERENCES Editeur(editeur_id),
+	assocsrubrub_rubrique INTEGER NOT NULL REFERENCES Rubrique(rubrique_id),
+	assocsrubrub_sousrubrique INTEGER NOT NULL REFERENCES Rubrique(rubrique_id)
 );
 
 \echo 'Associer_SousRubrique_Rubrique'
