@@ -33,6 +33,8 @@ Comme ça vous aurez accès au site en faisant : `127.0.0.1/nf17` :)
 
 ## TODO
 * check SQL à l'insertion dans le BD (dates par exemple)
+* Triggers pour toutes les mises à jour. Prendre exemple sur celui déjà fait.
+* Tuto installation windows
 
 
 ## Rendus

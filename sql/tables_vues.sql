@@ -359,7 +359,7 @@ $Maj_Supp_Commentaire$ LANGUAGE plpgsql;
    pas mis à jour à cause du Check).
    C'est à priori étrange parce que le trigger est AFTER INSERT et pas BEFORE
    ou INSTEAD OF mais j'imagine que lorsque qu'il appelle la procédure et qu'il
-   se rend compte qu'elle renvoie une erreur il annulle automatiquement tout.
+   se rend compte qu'elle renvoie une erreur il annule automatiquement tout.
    C'est cool, je voulais pas rajouter une condition ^^ 
 */
 
