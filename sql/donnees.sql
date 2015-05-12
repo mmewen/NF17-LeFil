@@ -151,13 +151,13 @@ INSERT INTO Commentaire (commentaire_titre, commentaire_corps, commentaire_enExe
 						commentaire_masque, commentaire_supprime, commentaire_createur,
 						commentaire_article, commentaire_datecreation, commentaire_datesuppression)
 VALUES ('Commentaire diffamatoire','Je trouve que cet article est vraiment inutile',FALSE,
-	    FALSE,TRUE,4,1,'2015-05-20 19:37:50',NULL);
+	    FALSE,FALSE,4,1,'2015-05-20 19:37:50',NULL);
 
 INSERT INTO Commentaire (commentaire_titre, commentaire_corps, commentaire_enExergue,
 						commentaire_masque, commentaire_supprime, commentaire_createur,
 						commentaire_article, commentaire_datecreation, commentaire_datesuppression)
 VALUES ('Commentaire correct','Je trouve que cet article est vraiment trop bien !',TRUE,
-	    FALSE,FALSE,4,1,'2015-05-21 19:37:50','2015-05-21 20:37:50');
+	    FALSE,FALSE,4,1,'2015-05-21 19:37:50',NULL);
 
 
 -- SELECT * FROM Commentaire;
@@ -186,9 +186,7 @@ VALUES ('2015-05-21 19:37:55',2,1,'Validé');
 
 
 INSERT INTO Supprimer_Commentaire (suppcomm_datesupp, suppcomm_commentaire, suppcomm_moderateur)
-VALUES ('2015-05-21 20:37:50',1,5);
-
--- Ici faire un trigger pour mettre à jour datesupp de Commentaire
+VALUES ('2015-05-21 20:37:50',2,5);
 
 -- SELECT * FROM Supprimer_Commentaire;
 
@@ -206,6 +204,7 @@ VALUES ('2015-05-21 20:37:50',2,5);
 INSERT INTO Mettre_A_Honneur (misehonneur_datemisehonneur, misehonneur_editeur, misehonneur_article)
 VALUES ('2015-05-22 20:37:50',3,1);
 
+-- +trigger
 -- SELECT * FROM Mettre_A_Honneur;
 
 
@@ -222,6 +221,7 @@ INSERT INTO Modifier_Statut_Editeur (modifstatedit_datemodif, modifstatedit_edit
 									 modifstatedit_statut, modifstatedit_article)
 VALUES ('2015-05-19 19:37:55',3,'Validé',1);
 
+-- +trigger
 -- SELECT * FROM Modifier_Statut_Editeur;
 
 

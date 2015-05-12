@@ -141,7 +141,10 @@ CREATE TABLE Commentaire (
 	commentaire_article INTEGER NOT NULL REFERENCES Article(article_id),
 	commentaire_datecreation TIMESTAMP NOT NULL,
 	commentaire_datesuppression TIMESTAMP
+	CHECK (commentaire_datecreation<commentaire_datesuppression)
 );
+
+/* La comparaison fonctionne ! C'est trop cool ! */
 
 \echo 'Commentaire'
 
@@ -334,5 +337,35 @@ CREATE VIEW vCommentaireNonSupprime AS
 	WHERE Commentaire.commentaire_supprime='0';
 
 \echo 'vCommentaireNonSupprime'
+
+/* TRIGGERS */
+
+-- Ca marche !
+
+CREATE FUNCTION maj_supp_commentaire() RETURNS trigger as $Maj_Supp_Commentaire$
+	BEGIN
+		UPDATE Commentaire 
+		SET commentaire_datesuppression=NEW.suppcomm_datesupp, 
+			commentaire_supprime=TRUE
+		WHERE Commentaire.commentaire_id=NEW.suppcomm_commentaire;
+	RETURN NULL;
+	END;
+$Maj_Supp_Commentaire$ LANGUAGE plpgsql;
+
+/* 
+   Heureusement, si la date de suppression est antérieure à la date
+   de création ça ne l'insère pas dans Supression_Commentaire
+   (sinon on aurait eu une contradiction vu que Commentaire ne se serait
+   pas mis à jour à cause du Check).
+   C'est à priori étrange parce que le trigger est AFTER INSERT et pas BEFORE
+   ou INSTEAD OF mais j'imagine que lorsque qu'il appelle la procédure et qu'il
+   se rend compte qu'elle renvoie une erreur il annulle automatiquement tout.
+   C'est cool, je voulais pas rajouter une condition ^^ 
+*/
+
+CREATE TRIGGER  Maj_Supp_Commentaire
+	AFTER INSERT ON Supprimer_Commentaire
+	FOR EACH ROW
+	EXECUTE PROCEDURE maj_supp_commentaire();
 
 --\d
