@@ -368,4 +368,37 @@ CREATE TRIGGER  Maj_Supp_Commentaire
 	FOR EACH ROW
 	EXECUTE PROCEDURE maj_supp_commentaire();
 
+
+
+CREATE FUNCTION maj_exergue_commentaire() RETURNS trigger as $Maj_Exergue_Commentaire$
+	BEGIN
+		UPDATE Commentaire 
+		SET commentaire_enExergue=TRUE 
+		WHERE Commentaire.commentaire_id=NEW.miseexcom_commentaire;
+	RETURN NULL;
+	END;
+$Maj_Exergue_Commentaire$ LANGUAGE plpgsql;
+
+CREATE TRIGGER  Maj_Exergue_Commentaire
+	AFTER INSERT ON Mettre_Exergue_Commentaire
+	FOR EACH ROW
+	EXECUTE PROCEDURE maj_exergue_commentaire();
+
+
+
+CREATE FUNCTION maj_honneur_article() RETURNS trigger as $Maj_Honneur_Article$
+	BEGIN
+		UPDATE Article
+		SET article_honneur=TRUE 
+		WHERE Article.article_id=NEW.misehonneur_article;
+	RETURN NULL;
+	END;
+$Maj_Honneur_Article$ LANGUAGE plpgsql;
+
+CREATE TRIGGER  Maj_Honneur_Article
+	AFTER INSERT ON Mettre_A_Honneur
+	FOR EACH ROW
+	EXECUTE PROCEDURE maj_honneur_article();
+
+
 --\d

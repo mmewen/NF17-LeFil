@@ -19,7 +19,6 @@ VALUES ('login5','login5@etu.utc.fr','nom5','prenom5');
 -- SELECT * FROM Personne;
 
 
-
 INSERT INTO Administrateur (admin_id, admin_login)
 VALUES (1,'login1');
 
@@ -81,11 +80,11 @@ VALUES ('Rubrique Triste',3,'2015-05-08 21:37:50');
 
 INSERT INTO Article (article_titre, article_supprime, article_publie, 
 					 article_honneur, article_comite)
-VALUES ('Article nul',FALSE,TRUE,TRUE,1);
+VALUES ('Article nul',FALSE,FALSE,FALSE,1);
 
 INSERT INTO Article (article_titre, article_supprime, article_publie, 
 					 article_honneur, article_comite)
-VALUES ('Article bien',FALSE,TRUE,TRUE,1);
+VALUES ('Article bien',FALSE,FALSE,FALSE,1);
 
 -- SELECT * FROM Article;
 
@@ -156,7 +155,7 @@ VALUES ('Commentaire diffamatoire','Je trouve que cet article est vraiment inuti
 INSERT INTO Commentaire (commentaire_titre, commentaire_corps, commentaire_enExergue,
 						commentaire_masque, commentaire_supprime, commentaire_createur,
 						commentaire_article, commentaire_datecreation, commentaire_datesuppression)
-VALUES ('Commentaire correct','Je trouve que cet article est vraiment trop bien !',TRUE,
+VALUES ('Commentaire correct','Je trouve que cet article est vraiment trop bien !',FALSE,
 	    FALSE,FALSE,4,1,'2015-05-21 19:37:50',NULL);
 
 
@@ -202,7 +201,7 @@ VALUES ('2015-05-21 20:37:50',2,5);
 
 
 INSERT INTO Mettre_A_Honneur (misehonneur_datemisehonneur, misehonneur_editeur, misehonneur_article)
-VALUES ('2015-05-22 20:37:50',3,1);
+VALUES ('2015-05-22 20:37:50',3,2);
 
 -- +trigger
 -- SELECT * FROM Mettre_A_Honneur;
