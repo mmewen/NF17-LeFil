@@ -87,6 +87,9 @@ Il y a des instructions intéressantes en commentaires dans le fichier sql/table
 * check SQL à l'insertion dans le BD (dates par exemple)
 * Triggers pour toutes les mises à jour. Prendre exemple sur celui déjà fait
 * Envoyer un mail au groupe précédent pour éclaircir le fonctionnement des statuts
+* Changer la table personne et virer les tables admins et tout
+* faire la structure du site (choisir les modules à faire et créer les modèles, vues et contrôlleurs associés)
+* faire un menu dynamique
 
 
 ## Rendus
