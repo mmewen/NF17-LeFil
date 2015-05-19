@@ -1,0 +1,199 @@
+Sur toutes les pages :
+	
+	Logo
+
+	Barre horizontale 
+
+		Lien vers page de garde
+
+		Liens vers rubriques
+
+		Lien vers page perso (en fonction de la nature de l'utilisateur)
+
+
+Page d'accueil :
+
+	Connexion
+
+		login
+		mdp
+
+	Inscription
+
+		login
+		mdp
+
+
+Page de garde :
+
+	Lien vers article à l'honneur le plus récent en grand 
+
+		Titre
+
+		Image
+
+		Bout de texte
+
+	Liste chronologique des articles avec liens (en plus petit)
+
+		Titre
+
+		(Image)
+
+		Bout de texte
+
+
+Page article :
+
+	Titre
+
+	L'image si existante
+
+	Le texte
+
+	L'auteur
+
+	Articles associés 
+
+	Commentaires en exergues (les plus récents en premiers)
+
+	Reste des commentaires
+
+	Commentaire = Nom de l'utilisateur puis commentaire
+
+
+AUTEUR
+
+Toutes les données affichées sont celles en lien avec l'auteur qui est connecté
+
+Page auteur :
+
+	Liste des articles 
+
+		Titre
+
+		Statut
+
+		Bouton page modif article
+
+		Bouton soumettre article
+
+		Bouton supprimer article
+
+	Lien vers page création d'article
+
+	Lien vers page récupération d'article supprimé
+
+
+Page modif article :
+
+	Champs de texte Titre
+
+	Image
+
+	Champs pour uploader une image (écrase l'ancienne par défaut)
+
+	Champs de texte Texte
+
+	Bouton enregistrer
+
+		Les champs sont déja remplis avec les données de l'article
+
+
+Page création article :
+
+	Champs de texte Titre
+
+	Champs pour uploader une image
+
+	Chaps de texte Texte
+
+	Bouton enregistrer
+
+
+Page récupération article supprimé :
+
+	Liste des articles supprimés
+
+		Titre
+
+		Statut
+
+		Bouton récuperer article
+
+
+EDITEUR 
+
+Toutes les données de la BD sont affichées
+
+Page editeur :
+
+	Liste des articles 
+
+		Titre
+
+		Statut
+
+		Lien vers page modif article
+
+		Lien vers page modifier statut article
+
+		Lien vers page ajout mots clefs article
+
+		Lien vers page associer article à rubrique ou sous rubrique
+
+		Lien vers page liaison d'article
+
+		Bouton mettre à l'honneur
+
+	Lien vers page publication
+
+	Lien vers page création mots clefs
+
+	Lien vers page créer rubriques et sous rubriques
+
+
+Page modif article :
+
+	Voir celle de l'auteur
+
+
+Page modif statut article :
+
+	Liste déroulante avec les statuts existants 
+
+
+Page ajout mots clefs article :
+
+	Liste déroulante avec mots clefs existants
+
+
+Page associer article à rubrique :
+
+	liste déroulante avec rubriques existantes
+
+
+Page publication :
+
+	Liste des articles validés
+
+		Bouton publication
+
+
+Page liaison article :
+
+	Liste déroulante avec articles validés
+
+
+Page création mots clefs :
+
+	Champs texte 
+
+
+Page création rubriques :
+
+	CHamps texte
+
+
+Idée : Au lieu d'avoir une liste des articles avec toutes les actions disponibles à côté de chacun de ces articles mettre des liens directement vers 
+des pages qui ont des listes d'articles avec une seule action possible
