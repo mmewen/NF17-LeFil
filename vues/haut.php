@@ -23,10 +23,20 @@
 					<a class="navbar-brand" href="?">Le Fil</a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav">
+					<ul class="nav navbar-nav">
 						<li class="active"><a href="?">Accueil</a></li>
 						<li><a href="?module=article">Articles</a></li>
 						<li><a href="?module=autre_chose">Autre chose...</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<?php
+							if (isset($_SESSION['login'])){ ?>
+								<li><a>Connecté en tant que <?php echo $_SESSION['login']; ?></a></li>
+								<li><a href="?module=connexion&page=deconnexion">Déconnexion</a></li>
+							<?php } else { ?>
+								<li><a href="?module=connexion">Connexion</a></li>
+							<?php }
+						?>
 					</ul>
 				</div>
 			</div>
