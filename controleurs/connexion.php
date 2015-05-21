@@ -35,9 +35,15 @@ function deconnexion(){
 function verifier_connexion(){
 	// Vérifier que la personne a un compte et que le mdp est bon
 	if(isset($_POST["login"]) && isset($_POST["mdp"]) && !empty($_POST["login"]) && !empty($_POST["mdp"]) && is_login_mdp_corrects($_POST["login"], $_POST["mdp"])){
+		$_SESSION['login'] = $_POST["login"];
 
 		// Vérifier les droits
-		$_SESSION['login'] = $_POST["login"];
+		$_SESSION['Administrateur'] = true;
+		$_SESSION['Auteur'] = true;
+		$_SESSION['Editeur'] = true;
+		$_SESSION['Lecteur'] = true;
+		$_SESSION['Moderateur'] = true;
+
 
 		Messages::info("Connexion réussie !");
 		include('vues/accueil.php');

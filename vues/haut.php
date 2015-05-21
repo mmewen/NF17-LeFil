@@ -23,10 +23,20 @@
 					<a class="navbar-brand" href="?">Le Fil</a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
+					<?php
+						if (!empty($_GET['module'])){
+							$module = $_GET['module'];
+						} else {
+							$module = "accueil";
+						}
+					?>
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="?">Accueil</a></li>
-						<li><a href="?module=article">Articles</a></li>
-						<li><a href="?module=autre_chose">Autre chose...</a></li>
+						<li<?php if($module=="accueil") echo ' class="active"'; ?>><a href="?">Accueil</a></li>
+						<li<?php if($module=="article") echo ' class="active"'; ?>><a href="?module=article">Articles</a></li>
+						<li<?php if($module=="rubrique") echo ' class="active"'; ?>><a href="?module=rubrique">Rubriques</a></li>
+						<li<?php if($module=="auteur") echo ' class="active"'; ?>><a href="?module=auteur">Auteur</a></li>
+						<li<?php if($module=="editeur") echo ' class="active"'; ?>><a href="?module=editeur">Editeur</a></li>
+						<li<?php if($module=="administration") echo ' class="active"'; ?>><a href="?module=administration">Administration</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<?php
