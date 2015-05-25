@@ -38,12 +38,11 @@ function verifier_connexion(){
 		$_SESSION['login'] = $_POST["login"];
 
 		// Vérifier les droits
-		$_SESSION['Administrateur'] = true;
-		$_SESSION['Auteur'] = true;
-		$_SESSION['Editeur'] = true;
-		$_SESSION['Lecteur'] = true;
-		$_SESSION['Moderateur'] = true;
-
+		$_SESSION['Administrateur'] = is_admin($_SESSION['login']);
+		$_SESSION['Auteur'] = is_auteur($_SESSION['login']);
+		$_SESSION['Editeur'] = is_editeur($_SESSION['login']);
+		$_SESSION['Lecteur'] = is_lecteur($_SESSION['login']);
+		$_SESSION['Moderateur'] = is_moderateur($_SESSION['login']);
 
 		Messages::info("Connexion réussie !");
 		include('vues/accueil.php');

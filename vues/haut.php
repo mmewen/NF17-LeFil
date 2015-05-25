@@ -34,9 +34,24 @@
 						<li<?php if($module=="accueil") echo ' class="active"'; ?>><a href="?">Accueil</a></li>
 						<li<?php if($module=="article") echo ' class="active"'; ?>><a href="?module=article">Articles</a></li>
 						<li<?php if($module=="rubrique") echo ' class="active"'; ?>><a href="?module=rubrique">Rubriques</a></li>
-						<li<?php if($module=="auteur") echo ' class="active"'; ?>><a href="?module=auteur">Auteur</a></li>
-						<li<?php if($module=="editeur") echo ' class="active"'; ?>><a href="?module=editeur">Editeur</a></li>
-						<li<?php if($module=="administration") echo ' class="active"'; ?>><a href="?module=administration">Administration</a></li>
+					<?php
+					if (isset($_SESSION['Administrateur']) && $_SESSION['Administrateur']){
+						echo ('<li '.(($module=="administration")?'class="active"':'').' >');
+						echo ('<a href="?module=administration">Administration</a></li>');
+					}
+					if (isset($_SESSION['Auteur']) && $_SESSION['Auteur']){
+						echo ('<li '.(($module=="auteur")?'class="active"':'').' >');
+						echo ('<a href="?module=auteur">Auteur</a></li>');
+					}
+					if (isset($_SESSION['Editeur']) && $_SESSION['Editeur']){
+						echo ('<li '.(($module=="editeur")?'class="active"':'').' >');
+						echo ('<a href="?module=editeur">Editeur</a></li>');
+					}
+					if (isset($_SESSION['Moderateur']) && $_SESSION['Moderateur']){
+						echo ('<li '.(($module=="moderation")?'class="active"':'').' >');
+						echo ('<a href="?module=moderation">Moderation</a></li>');
+					}
+					?>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<?php

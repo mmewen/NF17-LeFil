@@ -24,3 +24,13 @@
 	}
 	?>
 </p>
+
+
+<div class="page-header">
+	<h1>_SESSION</h1>
+</div>
+<p>
+	<?php
+	var_dump($_SESSION);
+	?>
+</p>
