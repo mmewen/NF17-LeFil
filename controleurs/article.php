@@ -45,15 +45,15 @@ function afficher_article(){
 function rubriques(){
 	if (isset($_GET['rubrique']) && !empty($_GET['rubrique'])){
 		$rubriqueMere = $_GET['rubrique'];
+		$nomRubriqueMere = get_nom_rubrique($rubriqueMere);
 	} else {
 		$rubriqueMere = null;
+		$nomRubriqueMere = "Rubriques";
 	}
 
 	$rubriques = get_ssrubriques_rubrique($rubriqueMere);
 	$articles = get_articles_publies_rubrique($rubriqueMere);
-
-	$articles_honneur = get_liste_articles_publies_honneur();
-	$articles_pas_honneur = get_liste_articles_publies();
+	
 	include 'vues/article/afficher_rubriques.php';
 }
 
