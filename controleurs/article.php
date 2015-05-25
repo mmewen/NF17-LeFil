@@ -48,3 +48,7 @@ function rubriques(){
 	$articles = get_articles_publies_rubrique($rubrique);
 	include 'afficher_rubriques.php';
 }
+
+function get_auteur_from_article(){
+	
+}
