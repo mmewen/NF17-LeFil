@@ -80,7 +80,7 @@ VALUES ('Rubrique Triste',3,'2015-05-08 21:37:50');
 
 INSERT INTO Article (article_titre, article_supprime, article_publie, 
 					 article_honneur, article_comite)
-VALUES ('Article nul',FALSE,FALSE,FALSE,1);
+VALUES ('Article nul',FALSE,TRUE,FALSE,1);
 
 INSERT INTO Article (article_titre, article_supprime, article_publie, 
 					 article_honneur, article_comite)
@@ -125,6 +125,9 @@ INSERT INTO Texte (texte_titre, texte_article, texte_corps)
 VALUES ('Texte beau',1,'Ceci est un article
 Il parle des fleurs et du beau temps
 Bonjour !');
+INSERT INTO Texte (texte_titre, texte_article, texte_corps)
+VALUES ('Texte de conclusion',1,'Voilà, merci, cest cool.
+Au revoir !');
 
 -- Il suffit d'aller à la ligne pour rentrer le retour chariot dans la BD
 

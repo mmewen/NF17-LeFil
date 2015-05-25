@@ -20,13 +20,19 @@ function defaut(){
 }
 
 function afficher_article(){
-	if (!empty($_GET['article']) && article_existe($_GET['article'])){
-		$article = get_article($_GET['article']);
+	if (!empty($_GET['article']) && is_publie($_GET['article'])){
+		$id = $_GET['article'];
+		$article = get_article($id);
+		$textes = get_texte_article($id);
+		$commsEnExergue = get_commentaires_article($id, true);
+		$commsAutres = get_commentaires_article($id, false);
+		$tags = get_commite_article($id);
 		include('vues/article/afficher_article.php');
-	} else if (!empty($_GET['article']) && article_supprime($_GET['article'])){
-		Message::warn("L'article auquel vous essayez d'accéder a été supprimé !");
+	} else if (!empty($_GET['article']) && is_supprime($_GET['article'])){
+		Messages::warn("L'article auquel vous essayez d'accéder a été supprimé !");
 		defaut();
 	} else {
+		Messages::warn("L'article demandé n'est pas accessible");
 		defaut();
 	}
 }
