@@ -31,7 +31,7 @@ function afficher_article(){
 		$textes = get_texte_article($id);
 		$commsEnExergue = get_commentaires_article($id, true);
 		$commsAutres = get_commentaires_article($id, false);
-		$tags = get_commite_article($id);
+		$tags = get_comite_article($id);
 		include('vues/article/afficher_article.php');
 	} else if (!empty($_GET['article']) && is_supprime($_GET['article'])){
 		Messages::warn("L'article auquel vous essayez d'accéder a été supprimé !");
