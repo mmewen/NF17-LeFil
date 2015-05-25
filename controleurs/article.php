@@ -6,6 +6,9 @@ if (!empty($_GET['page'])) {
 	switch ( $_GET['page'] ){	
 		case 'afficher_article':
 			afficher_article();
+			break;	
+		case 'rubriques':
+			rubriques();
 			break;
 		default:
 			defaut();
@@ -37,4 +40,11 @@ function afficher_article(){
 		Messages::warn("L'article demandé n'est pas accessible");
 		defaut();
 	}
+}
+
+function rubriques(){
+	$rubrique = $_GET['rubrique']; // /!\
+	$rubriques = get_ssrubriques_rubrique($rubrique);
+	$articles = get_articles_publies_rubrique($rubrique);
+	include 'afficher_rubriques.php';
 }

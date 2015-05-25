@@ -27,7 +27,8 @@ function get_article($id){
 }
 
 function get_texte_article($id){
-	$req ="SELECT t.texte_titre, t.texte_corps FROM Texte t WHERE t.texte_article='".addslashes($id)."' ORDER BY t.texte_id ASC;";
+	$req ="SELECT t.texte_titre, t.texte_corps FROM Texte t WHERE t.texte_article='".addslashes($id)."'
+	ORDER BY t.texte_id ASC;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_texte_article. Requête:<br>'.var_dump($req).'<br>');
 	$array = pg_fetch_all ( $result );
 	return $array;
@@ -37,7 +38,8 @@ function get_commentaires_article($id, $enExergue){
 	$req ="SELECT commentaire_titre, commentaire_corps, commentaire_createur, commentaire_datecreation FROM Commentaire
 			WHERE commentaire_article='".addslashes($id)."'
 				AND commentaire_enExergue=".($enExergue?"TRUE":"FALSE")." AND commentaire_masque=FALSE AND commentaire_supprime=FALSE
-			ORDER BY commentaire_datecreation DESC;";
+		
+		ORDER BY commentaire_datecreation DESC;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_commentaires_article. Requête:<br>'.var_dump($req).'<br>');
 	$array = pg_fetch_all ( $result );
 	return $array;
@@ -53,14 +55,33 @@ function get_commite_article($id){
 }
 
 function get_liste_articles_publies(){
-	$req ="SELECT article_id, article_titre FROM Article WHERE article_supprime=FALSE AND article_publie=TRUE;";
+	// penser à modifier la fonction get_articles_publies_rubrique si besoin
+	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Validé'
+			ORDER BY modifstatedit_datemodif DESC;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_liste_articles_publies. Requête:<br>'.var_dump($req).'<br>');
 	$array = pg_fetch_all ( $result );
 	return $array;
 }
 
 function get_liste_articles_publies_honneur(){
-	$req ="SELECT article_id, article_titre FROM Article WHERE article_supprime=FALSE AND article_publie=TRUE AND article_honneur=TRUE;";
+	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND article_honneur=TRUE AND modifstatedit_statut='Validé'
+			ORDER BY modifstatedit_datemodif DESC;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_liste_articles_publies. Requête:<br>'.var_dump($req).'<br>');
+	$array = pg_fetch_all ( $result );
+	return $array;
+}
+
+function get_ssrubriques_rubrique(){
+
+}
+
+function get_articles_publies_rubrique(){
+	// penser à modifier la fonction get_liste_articles_publies si besoin
+	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Validé'
+			ORDER BY modifstatedit_datemodif DESC;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_liste_articles_publies. Requête:<br>'.var_dump($req).'<br>');
 	$array = pg_fetch_all ( $result );
 	return $array;

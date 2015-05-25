@@ -13,11 +13,14 @@
 	<?php
 	echo extension_loaded('pgsql') ? '<span class="label label-primary">trouvée</span> <br>':'<span class="label label-warning">pas trouvée</span><br>';
 
-	$vSql ="SELECT * FROM test;";
 
-	$vQuery=pg_query($GLOBALS['bdd'], $vSql);
-	while ($vResult = pg_fetch_array($vQuery, null, PGSQL_ASSOC)) { 
-		echo ($vResult['index'].": ".$vResult['truc']."<br>");
-	}	
+	$req ="SELECT COUNT(*) from article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql. ');
+	$array = pg_fetch_array ( $result );
+	if ($array['count']>0) {
+		echo ('Ok ! Base de donnée non vide :)');
+	} else {
+		echo ('Oups, ya un soucis...');
+	}
 	?>
 </p>

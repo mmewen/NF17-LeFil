@@ -4,9 +4,9 @@ class DB {
 	//Attributs
 	static private $connection = null;
 	static private $host = 'localhost';
-	static private $dbname = 'dbnf17p001';
-	static private $user = 'mewen';
-	static private $password = 'Jinjir29';
+	static private $dbname = '';
+	static private $user = '';
+	static private $password = '';
 	static private $isConnected = false;
 
 	private function DB (){
