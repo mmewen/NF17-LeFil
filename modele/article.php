@@ -57,7 +57,7 @@ function get_commite_article($id){
 function get_liste_articles_publies(){
 	// penser à modifier la fonction get_articles_publies_rubrique si besoin
 	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
-			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Validé'
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Valide'
 			ORDER BY modifstatedit_datemodif DESC;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_liste_articles_publies. Requête:<br>'.var_dump($req).'<br>');
 	$array = pg_fetch_all ( $result );
@@ -66,7 +66,7 @@ function get_liste_articles_publies(){
 
 function get_liste_articles_publies_honneur(){
 	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
-			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND article_honneur=TRUE AND modifstatedit_statut='Validé'
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND article_honneur=TRUE AND modifstatedit_statut='Valide'
 			ORDER BY modifstatedit_datemodif DESC;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_liste_articles_publies. Requête:<br>'.var_dump($req).'<br>');
 	$array = pg_fetch_all ( $result );
@@ -80,7 +80,7 @@ function get_ssrubriques_rubrique(){
 function get_articles_publies_rubrique(){
 	// penser à modifier la fonction get_liste_articles_publies si besoin
 	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
-			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Validé'
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Valide'
 			ORDER BY modifstatedit_datemodif DESC;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_liste_articles_publies. Requête:<br>'.var_dump($req).'<br>');
 	$array = pg_fetch_all ( $result );
