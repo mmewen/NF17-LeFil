@@ -11,14 +11,14 @@
 	?>
 </p>
 
-<stong>
+<strong>
 <p>
 	À FAIRE !<br>
 	Auteur<br>
 	Commité éditorial ?<br>
 	Articles associés<br>
 </p>
-</stong>
+</strong>
 
 <p>
 	<br>

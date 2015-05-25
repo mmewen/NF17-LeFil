@@ -45,7 +45,7 @@ function get_commentaires_article($id, $enExergue){
 	return $array;
 }
 
-function get_commite_article($id){
+function get_comite_article($id){
 	$req ="SELECT m.motsclefs_corps FROM Indexer_Article i, MotsClefs m
 			WHERE i.indexart_article='".addslashes($id)."'
 				AND i.indexart_motclef=m.motsclefs_id";

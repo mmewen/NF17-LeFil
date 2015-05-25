@@ -11,7 +11,6 @@ if ($articles_honneur){
 	</div>
 	<p>
 		On dit là ya plein d'articles bien, genre celui-là : <a href="?module=article&page=afficher_article&article=1">><</a>
-
 		<div class="list-group"><?php
 			foreach ($articles_honneur as $article) {
 				?>
