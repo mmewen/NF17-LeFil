@@ -43,12 +43,20 @@ function afficher_article(){
 }
 
 function rubriques(){
-	$rubrique = $_GET['rubrique']; // /!\
-	$rubriques = get_ssrubriques_rubrique($rubrique);
-	$articles = get_articles_publies_rubrique($rubrique);
-	include 'afficher_rubriques.php';
+	if (isset($_GET['rubrique']) && !empty($_GET['rubrique'])){
+		$rubriqueMere = $_GET['rubrique'];
+	} else {
+		$rubriqueMere = null;
+	}
+
+	$rubriques = get_ssrubriques_rubrique($rubriqueMere);
+	$articles = get_articles_publies_rubrique($rubriqueMere);
+
+	$articles_honneur = get_liste_articles_publies_honneur();
+	$articles_pas_honneur = get_liste_articles_publies();
+	include 'vues/article/afficher_rubriques.php';
 }
 
 function get_auteur_from_article(){
-	
+
 }

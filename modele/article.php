@@ -73,16 +73,21 @@ function get_liste_articles_publies_honneur(){
 	return $array;
 }
 
-function get_ssrubriques_rubrique(){
-
+function get_ssrubriques_rubrique($rubriqueMere){
+	$req ="SELECT assocsrubrub_sousrubrique AS id_sous_rubrique, rubrique_nom AS nom_sous_rubrique FROM Associer_SousRubrique_Rubrique, Rubrique
+			WHERE assocsrubrub_rubrique=$rubriqueMere AND rubrique_id=assocsrubrub_sousrubrique
+			ORDER BY rubrique_nom DESC;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_ssrubriques_rubrique. Requête:<br>'.var_dump($req).'<br>');
+	$array = pg_fetch_all ( $result );
+	return $array;
 }
 
-function get_articles_publies_rubrique(){
+function get_articles_publies_rubrique($rubriqueMere){
 	// penser à modifier la fonction get_liste_articles_publies si besoin
 	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
 			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Valide'
 			ORDER BY modifstatedit_datemodif DESC;";
-	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_liste_articles_publies. Requête:<br>'.var_dump($req).'<br>');
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_articles_publies_rubrique. Requête:<br>'.var_dump($req).'<br>');
 	$array = pg_fetch_all ( $result );
 	return $array;
 }

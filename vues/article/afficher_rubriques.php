@@ -1,59 +1,51 @@
 <div class="jumbotron">
-	<h1><?php echo $article['article_titre']; ?></h1>
+	<h1>Page par défaut du module "article"</h1>
+	<p>'faut un peu d'imagination</p>
 </div>
+<?php
+var_dump($rubriques);
+if ($articles_honneur){
+	?>
+	<div class="page-header">
+		<h1>À l'honneur</h1>
+	</div>
+	<p>
+		On dit là ya plein d'articles bien, genre celui-là : <a href="?module=article&page=afficher_article&article=1">><</a>
 
-<p>
-	<?php 
-	foreach ($textes as $t) {
-		echo('<h2>'.$t["texte_titre"].'</h2>');
-		echo nl2br($t["texte_corps"]);
+		<div class="list-group"><?php
+			foreach ($articles_honneur as $article) {
+				?>
+				<a href="?module=article&page=afficher_article&article=<?php echo($article["article_id"]); ?>" class="list-group-item">
+					<h4 class="list-group-item-heading"><?php echo($article["article_titre"]); ?></h4>
+					<p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+				</a>
+				<?php
+				// echo nl2br($t["texte_corps"]);
+			} ?>
+		</div>
+	</p>
+
+	<div class="page-header">
+		<h1>Pas à l'honneur</h1>
+	</div>
+	<?php
+}
+
+echo ('<p>');
+	if ($articles_pas_honneur){
+		echo ('<div class="list-group">');
+		foreach ($articles_pas_honneur as $article) {
+		?>
+			<a href="?module=article&page=afficher_article&article=<?php echo($article["article_id"]); ?>" class="list-group-item">
+				<h4 class="list-group-item-heading"><?php echo($article["article_titre"]); ?></h4>
+				<p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+			</a>
+		<?php
+			// echo nl2br($t["texte_corps"]);
+		}
+		echo ('</div>');
+	} else {
+		echo("Aucun article valable à afficher !");
 	}
 	?>
-</p>
-
-<stong>
-<p>
-	À FAIRE !<br>
-	Auteur<br>
-	Commité éditorial ?<br>
-	Articles associés<br>
-</p>
-</stong>
-
-<p>
-	<br>
-	<?php
-		if ($tags){
-			echo ('<h3>Tags</h3>');
-
-			foreach ($tags as $tag) {
-				echo '<h4><span class="label label-default">'.nl2br($tag["motsclefs_corps"].'</span></h4>');
-			}
-		} else {
-			echo ('Cet article ne possède pas encore de tag.');
-		}
-	?>
-</p>
-
-
-<div class="page-header">
-	<h1>Commentaires</h1>
-</div>
-<p>
-	<?php
-	if ($commsEnExergue){
-		echo ('<h3>Commentaires mis en avant</h3>');
-
-		foreach ($commsEnExergue as $com) {
-			echo('<h4>'.$com["commentaire_titre"].' - écrit par '.$com["commentaire_createur"].' le '.$com["commentaire_datecreation"].'</h4>');
-			echo '<p>'.nl2br($com["commentaire_corps"].'</p>');
-		}
-		echo '<hr>';
-	}
-	if ($commsAutres){
-		foreach ($commsAutres as $com) {
-			echo('<h4>'.$com["commentaire_titre"].' - écrit par '.$com["commentaire_createur"].' le '.$com["commentaire_datecreation"].'</h4>');
-			echo '<p>'.nl2br($com["commentaire_corps"].'</p>');
-		}
-	}?>
 </p>

@@ -10,4 +10,19 @@
 	<button type="submit" class="btn btn-default">Se connecter</button>
 </form>
 
+<hr>
+<h3>Petite aide :</h3>
+<ul class="list-group">
+	<li class="list-group-item">Administrateur : login1</li>
+	<li class="list-group-item">Auteur : login2</li>
+	<li class="list-group-item">Editeur : login3</li>
+	<li class="list-group-item">Lecteur : login4</li>
+	<li class="list-group-item">Moderateur : login5</li>
+</ul>
+
+
+
+
+
+
 <!-- Penser à ajouter des exemples d'identifiants, ça serait plus simple :P -->

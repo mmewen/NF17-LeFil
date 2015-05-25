@@ -33,7 +33,7 @@
 					<ul class="nav navbar-nav">
 						<li<?php if($module=="accueil") echo ' class="active"'; ?>><a href="?">Accueil</a></li>
 						<li<?php if($module=="article") echo ' class="active"'; ?>><a href="?module=article">Articles</a></li>
-						<li<?php if($module=="rubrique") echo ' class="active"'; ?>><a href="?module=rubrique">Rubriques</a></li>
+						<li<?php if($module=="article") echo ' class="active"'; ?>><a href="?module=article&page=rubriques">Rubriques</a></li>
 					<?php
 					if (isset($_SESSION['Administrateur']) && $_SESSION['Administrateur']){
 						echo ('<li '.(($module=="administration")?'class="active"':'').' >');
