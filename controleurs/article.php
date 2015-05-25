@@ -16,6 +16,8 @@ if (!empty($_GET['page'])) {
 }
 
 function defaut(){
+	$articles_honneur = get_liste_articles_publies_honneur();
+	$articles_pas_honneur = get_liste_articles_publies();
 	include('vues/article/defaut.php');
 }
 

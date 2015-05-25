@@ -51,3 +51,17 @@ function get_commite_article($id){
 	$array = pg_fetch_all ( $result );
 	return $array;
 }
+
+function get_liste_articles_publies(){
+	$req ="SELECT article_id, article_titre FROM Article WHERE article_supprime=FALSE AND article_publie=TRUE;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_liste_articles_publies. Requête:<br>'.var_dump($req).'<br>');
+	$array = pg_fetch_all ( $result );
+	return $array;
+}
+
+function get_liste_articles_publies_honneur(){
+	$req ="SELECT article_id, article_titre FROM Article WHERE article_supprime=FALSE AND article_publie=TRUE AND article_honneur=TRUE;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_liste_articles_publies. Requête:<br>'.var_dump($req).'<br>');
+	$array = pg_fetch_all ( $result );
+	return $array;
+}
