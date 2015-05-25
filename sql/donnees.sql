@@ -136,14 +136,14 @@ Au revoir !');
 
 
 INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
-VALUES ('Validé',3,'2015-05-09 19:37:50');
+VALUES ('Valide',3,'2015-05-09 19:37:50');
 
 -- SELECT * FROM Statut;
 
 
 
 INSERT INTO Remarque (remarque_corps, remarque_statut)
-VALUES ('Ceci est une remarque','Validé');
+VALUES ('Ceci est une remarque','Valide');
 
 -- SELECT * FROM Remarque;
 
@@ -175,7 +175,7 @@ VALUES ('temps',3,'2015-06-20 19:37:50');
 
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
-VALUES ('2015-05-21 19:37:55',2,1,'Validé');
+VALUES ('2015-05-21 19:37:55',2,1,'Valide');
 
 /* Je comprends pas ce que cette table fait en fait. C'est pour changer le statut
    d'un article ? Pourquoi y'a l'auteur alors ? C'est pas plutôt un editeur qui doit 
@@ -221,7 +221,7 @@ VALUES ('2015-05-23 20:37:50',1,1,3);
 
 INSERT INTO Modifier_Statut_Editeur (modifstatedit_datemodif, modifstatedit_editeur,
 									 modifstatedit_statut, modifstatedit_article)
-VALUES ('2015-05-19 19:37:55',3,'Validé',1);
+VALUES ('2015-05-19 19:37:55',3,'Valide',1);
 
 -- +trigger
 -- SELECT * FROM Modifier_Statut_Editeur;

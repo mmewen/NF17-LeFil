@@ -109,7 +109,7 @@ CREATE TABLE Texte (
 
 CREATE TYPE enum_statut AS ENUM (
 	'A réviser', 'En rédaction', 'En relecture'
-	'Rejeté', 'Soumis', 'Validé'
+	'Rejeté', 'Soumis', 'Valide'
 );
 
 \echo 'ENUM_STATUT'
