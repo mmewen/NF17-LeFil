@@ -20,9 +20,4 @@
 	<li class="list-group-item">Moderateur : login5</li>
 </ul>
 
-
-
-
-
-
-<!-- Penser à ajouter des exemples d'identifiants, ça serait plus simple :P -->
+Le mot de passe est quelconque pour le moment.
