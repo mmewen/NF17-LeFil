@@ -83,10 +83,14 @@ function commenter(){
 function rechercher(){
 	$nomRubriqueMere = "Recherche";
 	if (isset($_POST["recherche"]) && !empty($_POST["recherche"])){
-		$rubriques = get_rubriques_correspondantes($_POST["recherche"]);
-		$articles = get_articles_correspondants($_POST["recherche"]);
-		include 'vues/article/afficher_rubriques.php';
+		$recherche = $_POST["recherche"];
+	} else if (isset($_GET["recherche"]) && !empty($_GET["recherche"])){
+		$recherche = $_GET["recherche"];
 	} else {
 		defaut();
+		return;
 	}
+	$rubriques = get_rubriques_correspondantes($recherche);
+	$articles = get_articles_correspondants($recherche);
+	include 'vues/article/afficher_rubriques.php';
 }

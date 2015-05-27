@@ -44,8 +44,8 @@
 						echo ('<a href="?module=auteur">Auteur</a></li>');
 					}
 					if (isset($_SESSION['Editeur']) && $_SESSION['Editeur']){
-						echo ('<li '.(($module=="editeur")?'class="active"':'').' >');
-						echo ('<a href="?module=editeur">Editeur</a></li>');
+						echo ('<li '.(($module=="edition")?'class="active"':'').' >');
+						echo ('<a href="?module=edition">Edition</a></li>');
 					}
 					if (isset($_SESSION['Moderateur']) && $_SESSION['Moderateur']){
 						echo ('<li '.(($module=="moderation")?'class="active"':'').' >');

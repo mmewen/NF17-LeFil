@@ -1,6 +1,5 @@
 <div class="jumbotron">
-	<h1>Page par défaut du module "article"</h1>
-	<p>'faut un peu d'imagination</p>
+	<h1>Liste des articles</h1>
 </div>
 
 <form action="?module=article&page=rechercher" method="POST">
