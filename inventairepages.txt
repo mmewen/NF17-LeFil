@@ -1,24 +1,6 @@
-Sur toutes les pages :
-	
-	Logo
-
-	Barre horizontale 
-
-		Lien vers page de garde
-
-		Liens vers rubriques
-
-		Lien vers page perso (en fonction de la nature de l'utilisateur)
-
-
 Page d'accueil :
 
-	Connexion
-
-		login
-		mdp
-
-	Inscription
+	Inscription ???
 
 		login
 		mdp
@@ -45,8 +27,6 @@ Page de garde :
 
 Page article :
 
-	Titre
-
 	L'image si existante
 
 	Le texte
@@ -54,12 +34,6 @@ Page article :
 	L'auteur
 
 	Articles associés 
-
-	Commentaires en exergues (les plus récents en premiers)
-
-	Reste des commentaires
-
-	Commentaire = Nom de l'utilisateur puis commentaire
 
 
 AUTEUR
@@ -148,10 +122,6 @@ Page editeur :
 
 	Lien vers page publication
 
-	Lien vers page création mots clefs
-
-	Lien vers page créer rubriques et sous rubriques
-
 
 Page modif article :
 
@@ -183,16 +153,6 @@ Page publication :
 Page liaison article :
 
 	Liste déroulante avec articles validés
-
-
-Page création mots clefs :
-
-	Champs texte 
-
-
-Page création rubriques :
-
-	CHamps texte
 
 
 Idée : Au lieu d'avoir une liste des articles avec toutes les actions disponibles à côté de chacun de ces articles mettre des liens directement vers 

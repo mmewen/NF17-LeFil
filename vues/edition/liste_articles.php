@@ -1,61 +1,45 @@
 <div class="jumbotron">
-	<h1>Liste des articles</h1>
+	<h1>Gestion des articles</h1>
 </div>
 
-<form action="?module=article&page=rechercher" method="POST">
-	<div class="form-group">
-		<input type="text" class="form-control" id="recherche" name="recherche" placeholder="Rechercher un article ou une rubrique" <?php
-		if (isset($_POST["recherche"]) && !empty($_POST["recherche"])){
-			echo("value=".$_POST["recherche"]);
-		}
-		?>>
-	</div>
-	<button type="submit" class="btn btn-default">Rechercher</button>
-</form>
-
-<hr>
-
 <?php
-if ($articles_honneur){
-	?>
+// Pour chaque catégorie d'article
+?>
 	<div class="page-header">
-		<h1>À l'honneur</h1>
+		<h1>Articles machin</h1>
 	</div>
 	<p>
-		<div class="list-group"><?php
-			foreach ($articles_honneur as $article) {
-				?>
-				<a href="?module=article&page=afficher_article&article=<?php echo($article["article_id"]); ?>" class="list-group-item">
-					<h4 class="list-group-item-heading"><?php echo($article["article_titre"]); ?></h4>
-					<p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-				</a>
-				<?php
-				// echo nl2br($t["texte_corps"]);
-			} ?>
-		</div>
+		<?php 
+	// Penser à utiliser commentaire_datesuppression + les historiques
+		foreach ($comms as $com) {
+			echo('<h4>'.$com["commentaire_titre"].' - écrit par '.$com["lecteur_login"].' le '.$com["commentaire_datecreation"].
+				' sur l\'article <a href="?module=article&page=afficher_article&article='.$com['commentaire_article'].'">'.$com['article_titre'].'</a> - ');
+
+			if ($com["commentaire_masque"] == 't'){
+				echo "<span class='label label-primary'>Masqué</span> ";
+			} else {
+				echo "<span class='label label-default'>Affichable</span> ";
+			}
+
+			if ($com["commentaire_enexergue"] == 't'){
+				echo "<span class='label label-info'>En exergue</span> ";
+			} else {
+				echo "<span class='label label-default'>Pas en exergue</span> ";
+			}
+
+			if ($com["commentaire_supprime"] == 't'){
+				echo "<span class='label label-warning'>Supprimé</span> ";
+			} else {
+				echo "<span class='label label-default'>Pas supprimé</span> ";
+			}
+
+			echo(' - <a href="?module=moderation&page=editer_commentaire&commentaire='.$com["commentaire_id"].'">Éditer</a></h4>');
+
+			?>
+			<div class="well">
+	        <p><?php echo(nl2br($com["commentaire_corps"])); ?></p>
+	      	</div><br><?php
+		}?>
 	</p>
-
-	<div class="page-header">
-		<h1>Pas à l'honneur</h1>
-	</div>
 	<?php
-}
-
-echo ('<p>');
-	if ($articles_pas_honneur){
-		echo ('<div class="list-group">');
-		foreach ($articles_pas_honneur as $article) {
-		?>
-			<a href="?module=article&page=afficher_article&article=<?php echo($article["article_id"]); ?>" class="list-group-item">
-				<h4 class="list-group-item-heading"><?php echo($article["article_titre"]); ?></h4>
-				<p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-			</a>
-		<?php
-			// echo nl2br($t["texte_corps"]);
-		}
-		echo ('</div>');
-	} else {
-		echo("Aucun article valable à afficher !");
-	}
-	?>
-</p>
+// end pour chaque type d'article

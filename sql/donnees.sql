@@ -197,7 +197,7 @@ VALUES ('2015-05-21 20:37:50',2,5);
 INSERT INTO Mettre_Exergue_Commentaire (miseexcom_datemiseex, miseexcom_commentaire, miseexcom_moderateur)
 VALUES ('2015-05-21 20:37:50',2,5);
 
--- Ici faire trigger pour mettre à jour booléen de Commentaire
+-- + trigger
 
 -- SELECT * FROM Mettre_Exergue_Commentaire;
 
