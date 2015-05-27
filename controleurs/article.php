@@ -10,6 +10,9 @@ if (!empty($_GET['page'])) {
 		case 'rubriques':
 			rubriques();
 			break;
+		case 'commenter':
+			commenter();
+			break;
 		default:
 			defaut();
 			break;
@@ -59,4 +62,17 @@ function rubriques(){
 
 function get_auteur_from_article(){
 
+}
+
+function commenter(){
+	if(isset($_SESSION['Lecteur']) && ($_SESSION['Lecteur'] > 0)  && !empty($_POST["titre"]) && !empty($_POST["com"])){
+		// Alors on a le droit de commenter
+		poster_commentaire($_POST["titre"], $_POST["com"]);
+		Messages::info("Votre commentaire a bien été posté ! :)");
+		afficher_article(); // on a le numéro d'article en GET
+	} else {
+		// on se fait bouler
+		Messages::error("Genre tu peux poster un commentaire sans être connecté, genre !");
+		defaut();
+	}
 }
