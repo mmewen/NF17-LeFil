@@ -3,6 +3,19 @@
 	<p>'faut un peu d'imagination</p>
 </div>
 
+<form action="?module=article&page=rechercher" method="POST">
+	<div class="form-group">
+		<input type="text" class="form-control" id="recherche" name="recherche" placeholder="Rechercher un article ou une rubrique" <?php
+		if (isset($_POST["recherche"]) && !empty($_POST["recherche"])){
+			echo("value=".$_POST["recherche"]);
+		}
+		?>>
+	</div>
+	<button type="submit" class="btn btn-default">Rechercher</button>
+</form>
+
+<hr>
+
 <?php
 if ($articles_honneur){
 	?>

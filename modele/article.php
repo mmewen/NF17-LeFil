@@ -45,11 +45,11 @@ function get_commentaires_article($id, $enExergue){
 	return $array;
 }
 
-function get_comite_article($id){
+function get_tag_article($id){
 	$req ="SELECT m.motsclefs_corps FROM Indexer_Article i, MotsClefs m
 			WHERE i.indexart_article='".pg_escape_string($id)."'
 				AND i.indexart_motclef=m.motsclefs_id";
-	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_commite_article.</strong> Requête:<br>'.$req.'<br>'));
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_tag_article.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all ( $result );
 	return $array;
 }
@@ -119,4 +119,34 @@ function poster_commentaire($titre_com, $texte_com){
 			VALUES ('".pg_escape_string($titre_com)."','".pg_escape_string($texte_com)."',FALSE,
 				    FALSE,FALSE,".$_SESSION['Lecteur'].",".$_GET["article"].",'".date("Y-m-d H:i:s")."',NULL);";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql poster_commentaire.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function get_rubriques_correspondantes($recherche){
+	$req ="SELECT rubrique_id AS id_sous_rubrique, rubrique_nom AS nom_sous_rubrique
+			FROM Rubrique
+			WHERE LOWER(rubrique_nom) LIKE LOWER('%$recherche%');";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_rubriques_correspondantes.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_all ( $result );
+	return $array;
+}
+
+function get_articles_correspondants($recherche){
+	// penser à modifier la fonction get_articles_publies_rubrique si besoin
+	$req ="SELECT article_id, article_titre
+			FROM Article, Modifier_Statut_Editeur
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE
+					AND modifstatedit_statut='Valide' AND (
+						LOWER(article_titre) LIKE LOWER('%$recherche%')
+						OR article_id IN
+							(SELECT i.indexart_article FROM Indexer_Article i, MotsClefs m
+							WHERE i.indexart_motclef=m.motsclefs_id AND LOWER(motsclefs_corps) LIKE LOWER('%$recherche%'))
+						OR article_id IN
+							(SELECT texte_article FROM Texte
+							WHERE LOWER(texte_corps) LIKE LOWER('%$recherche%'))
+						)
+			ORDER BY modifstatedit_datemodif DESC;";
+	$result = pg_query($GLOBALS['bdd'], $req)
+			or die (Messages::error('<strong>Erreur requête psql get_articles_correspondants.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_all ( $result );
+	return $array;
 }

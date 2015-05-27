@@ -13,6 +13,9 @@ if (!empty($_GET['page'])) {
 		case 'commenter':
 			commenter();
 			break;
+		case 'rechercher':
+			rechercher();
+			break;
 		default:
 			defaut();
 			break;
@@ -34,7 +37,7 @@ function afficher_article(){
 		$textes = get_texte_article($id);
 		$commsEnExergue = get_commentaires_article($id, true);
 		$commsAutres = get_commentaires_article($id, false);
-		$tags = get_comite_article($id);
+		$tags = get_tag_article($id);
 		include('vues/article/afficher_article.php');
 	} else if (!empty($_GET['article']) && is_supprime($_GET['article'])){
 		Messages::warn("L'article auquel vous essayez d'accéder a été supprimé !");
@@ -73,6 +76,17 @@ function commenter(){
 	} else {
 		// on se fait bouler
 		Messages::error("Genre tu peux poster un commentaire sans être connecté, genre !");
+		defaut();
+	}
+}
+
+function rechercher(){
+	$nomRubriqueMere = "Recherche";
+	if (isset($_POST["recherche"]) && !empty($_POST["recherche"])){
+		$rubriques = get_rubriques_correspondantes($_POST["recherche"]);
+		$articles = get_articles_correspondants($_POST["recherche"]);
+		include 'vues/article/afficher_rubriques.php';
+	} else {
 		defaut();
 	}
 }
