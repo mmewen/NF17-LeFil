@@ -400,5 +400,4 @@ CREATE TRIGGER  Maj_Honneur_Article
 	FOR EACH ROW
 	EXECUTE PROCEDURE maj_honneur_article();
 
-
 --\d

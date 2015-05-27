@@ -3,7 +3,7 @@ include("modele/connexion.php"); // on inclue le modèle (= toutes les fonctions
 
 // C'est ici qu'il faut vérifier si l'utilisateur est admin ou pas et tout
 if (!empty($_GET['page'])) {
-	switch ( $_GET['page'] ){
+	switch ($_GET['page']){
 		case 'deconnexion':
 			deconnexion();
 			break;

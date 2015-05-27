@@ -175,11 +175,7 @@ VALUES ('temps',3,'2015-06-20 19:37:50');
 
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
-VALUES ('2015-05-21 19:37:55',2,1,'Valide');
-
-/* Je comprends pas ce que cette table fait en fait. C'est pour changer le statut
-   d'un article ? Pourquoi y'a l'auteur alors ? C'est pas plutôt un editeur qui doit 
-   changer le statut d'un article ? */
+VALUES ('2015-05-21 19:37:55',2,1,'En rédaction');
 
 -- + trigger
 
@@ -196,8 +192,6 @@ VALUES ('2015-05-21 20:37:50',2,5);
 
 INSERT INTO Mettre_Exergue_Commentaire (miseexcom_datemiseex, miseexcom_commentaire, miseexcom_moderateur)
 VALUES ('2015-05-21 20:37:50',2,5);
-
--- Ici faire trigger pour mettre à jour booléen de Commentaire
 
 -- SELECT * FROM Mettre_Exergue_Commentaire;
 
@@ -223,7 +217,6 @@ INSERT INTO Modifier_Statut_Editeur (modifstatedit_datemodif, modifstatedit_edit
 									 modifstatedit_statut, modifstatedit_article)
 VALUES ('2015-05-19 19:37:55',3,'Valide',1);
 
--- +trigger
 -- SELECT * FROM Modifier_Statut_Editeur;
 
 
