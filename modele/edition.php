@@ -186,3 +186,33 @@ function delete_rubrique_article($id_rubrique, $id_article){
 			WHERE assocartrub_rubrique=$id_rubrique AND assocartrub_article=$id_article;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql delete_rubrique_article.</strong> Requête:<br>'.$req.'<br>'));
 }
+
+
+function get_articles_associes(){
+	$req ="SELECT a.article_id AS id_art_1, a.article_titre AS titre_art_1, a2.article_id AS id_art_2, a2.article_titre AS titre_art_2
+			FROM Article a
+			LEFT OUTER JOIN Associer_Article_Article aaa ON aaa.assocartart_article1=a.article_id
+			LEFT OUTER JOIN Article a2 ON aaa.assocartart_article2=a2.article_id;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_articles_rubriques.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_all ( $result );
+	return $array;
+}
+
+function add_association_2articles($id_art_1, $id_art_2){
+	$req ="INSERT INTO Associer_Article_Article (assocartart_dateassoc, assocartart_article1,
+						assocartart_article2, assocartart_editeur)
+			VALUES ('".date("Y-m-d H:i:s")."',$id_art_1,$id_art_2,".$_SESSION['Editeur'].");";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql add_rubrique_article.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function delete_association_2articles($id_art_1, $id_art_2){
+	$req ="DELETE FROM Associer_Article_Article
+			WHERE
+				(assocartart_article1=$id_art_1 AND assocartart_article2=$id_art_2)
+				OR
+				(assocartart_article1=$id_art_2 AND assocartart_article2=$id_art_1);";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql delete_rubrique_article.</strong> Requête:<br>'.$req.'<br>'));
+}
+// INSERT INTO Associer_Article_Article (assocartart_dateassoc, assocartart_article1,
+// 									  assocartart_article2, assocartart_editeur)
+// VALUES ('2015-05-19 21:37:55',1,2,3);

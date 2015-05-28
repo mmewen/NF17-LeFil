@@ -10,6 +10,7 @@
 	</div>
 	<a href="?module=edition&page=editer_motcles_article&article=1">édition tags</a> 
 	<a href="?module=edition&page=editer_rubrique_article&article=1">édition rubriques</a>
+	<a href="?module=edition&page=editer_associations_articles&article=1">édition articles associés</a>
 	<p>
 		<?php 
 	// Penser à utiliser commentaire_datesuppression + les historiques

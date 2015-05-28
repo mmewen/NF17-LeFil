@@ -54,6 +54,15 @@ if (isset($_SESSION['Editeur']) && $_SESSION['Editeur'] > 0){ // équivaut à di
 			case 'supprimer_rubrique_article':
 				supprimer_rubrique_article();
 				break;
+			case 'editer_associations_articles':
+				editer_associations_articles();
+				break;
+			case 'ajouter_assoc_article':
+				ajouter_article_associe();
+				break;
+			case 'supprimer_assoc_article':
+				supprimer_article_associe();
+				break;
 			default:
 				defaut();
 				break;
@@ -221,4 +230,37 @@ function supprimer_rubrique_article(){
 		Messages::error("Erreur, il y a des paramètres manquants !");
 	}
 	editer_rubrique_article();
+}
+
+function editer_associations_articles(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		$id_article = intval($_GET['article']);
+		$article = get_article($id_article);
+		$assoc_articles = get_articles_associes();
+		include('vues/edition/editer_associations_articles.php');
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour editer_associations_articles !");
+	}
+}
+
+function ajouter_article_associe(){
+	if (isset($_GET['article']) && !empty($_GET['article']) && isset($_POST['article2']) && !empty($_POST['article2'])) {
+		add_association_2articles(intval($_POST['article2']), intval($_GET['article']));
+		Messages::info("Association inter-article correctement modifiée !");
+	} else {
+		var_dump($_GET);
+		var_dump($_POST);
+		Messages::error("Erreur, il y a des paramètres manquants pour ajouter_article_associe !");
+	}
+	editer_associations_articles();
+}
+
+function supprimer_article_associe(){
+	if (isset($_GET['article']) && !empty($_GET['article']) && isset($_GET['article2']) && !empty($_GET['article2'])) {
+		delete_association_2articles(intval($_GET['article2']), intval($_GET['article']));
+		Messages::info("Association inter-article correctement modifiée !");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour supprimer_article_associe !");
+	}
+	editer_associations_articles();
 }

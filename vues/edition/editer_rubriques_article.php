@@ -10,7 +10,7 @@
 
 foreach ($rubriques as $rubrique) {
 	if (intval($rubrique["article_id"]) == $id_article){
-		echo(" <a href='?module=edition&page=supprimer_rubrique_article&article=".$id_article."&id_rubrique=".$rubrique["rubrique_id"]."' title='Supprimer le mot-clé'>");
+		echo(" <a href='?module=edition&page=supprimer_rubrique_article&article=".$id_article."&id_rubrique=".$rubrique["rubrique_id"]."' title='Supprimer l'appartenance à la rubrique''>");
 		echo("<button type='button' class='btn btn-lg btn-info'>".$rubrique["rubrique_nom"]."</button>");
 		echo("</a>");
 	}
