@@ -39,11 +39,20 @@ if (isset($_SESSION['Editeur']) && $_SESSION['Editeur'] > 0){ // équivaut à di
 			case 'editer_motcles_article':
 				editer_motcles_article();
 				break;
-			case 'ajouter_mot_cle':
+			case 'ajouter_motcle_article':
 				ajouter_motcles_article();
 				break;
-			case 'supprimer_mot_cle':
+			case 'supprimer_motcle_article':
 				supprimer_mot_cle_article();
+				break;
+			case 'editer_rubrique_article':
+				editer_rubrique_article();
+				break;
+			case 'ajouter_rubrique_article':
+				ajouter_rubrique_article();
+				break;
+			case 'supprimer_rubrique_article':
+				supprimer_rubrique_article();
 				break;
 			default:
 				defaut();
@@ -181,4 +190,35 @@ function supprimer_mot_cle_article(){
 		Messages::error("Erreur, il y a des paramètres manquants !");
 	}
 	editer_motcles_article();
+}
+
+function editer_rubrique_article(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		$id_article = $_GET['article'];
+		$article = get_article($id_article);
+		$rubriques = get_articles_rubriques();
+		include('vues/edition/editer_rubriques_article.php');
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants !");
+	}
+}
+
+function ajouter_rubrique_article(){
+	if (isset($_GET['article']) && !empty($_GET['article']) && isset($_POST['id_rubrique']) && !empty($_POST['id_rubrique'])) {
+		add_rubrique_article(intval($_POST['id_rubrique']), intval($_GET['article']));
+		Messages::info("Rubrique correctement modifiée !");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants !");
+	}
+	editer_rubrique_article();
+}
+
+function supprimer_rubrique_article(){
+	if (isset($_GET['article']) && !empty($_GET['article']) && isset($_GET['id_rubrique']) && !empty($_GET['id_rubrique'])) {
+		delete_rubrique_article(intval($_GET['id_rubrique']), intval($_GET['article']));
+		Messages::info("Rubrique correctement modifiée !");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants !");
+	}
+	editer_rubrique_article();
 }

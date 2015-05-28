@@ -163,3 +163,26 @@ function supprimer_motcle_article($id_motcle, $id_article){
 			WHERE indexart_motclef=$id_motcle AND indexart_article=$id_article;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql supprimer_motcle_article.</strong> Requête:<br>'.$req.'<br>'));
 }
+
+function get_articles_rubriques(){
+	$req ="SELECT r.rubrique_id, r.rubrique_nom, a.article_id
+			FROM Rubrique r
+			LEFT OUTER JOIN Associer_Article_Rubrique aar ON aar.assocartrub_rubrique=r.rubrique_id
+			LEFT OUTER JOIN Article a ON aar.assocartrub_article=a.article_id;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_articles_rubriques.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_all ( $result );
+	return $array;
+}
+
+function add_rubrique_article($id_rubrique, $id_article){
+	$req ="INSERT INTO Associer_Article_Rubrique (assocartrub_dateassoc, assocartrub_rubrique,
+						assocartrub_editeur, assocartrub_article)
+			VALUES ('".date("Y-m-d H:i:s")."',$id_rubrique,".$_SESSION['Editeur'].",$id_article);";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql add_rubrique_article.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function delete_rubrique_article($id_rubrique, $id_article){
+	$req ="DELETE FROM Associer_Article_Rubrique
+			WHERE assocartrub_rubrique=$id_rubrique AND assocartrub_article=$id_article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql delete_rubrique_article.</strong> Requête:<br>'.$req.'<br>'));
+}

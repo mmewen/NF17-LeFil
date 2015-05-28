@@ -8,7 +8,8 @@
 	<div class="page-header">
 		<h1>Articles machin</h1>
 	</div>
-	<a href="?module=edition&page=editer_motcles_article&article=1">truc</a>
+	<a href="?module=edition&page=editer_motcles_article&article=1">édition tags</a> 
+	<a href="?module=edition&page=editer_rubrique_article&article=1">édition rubriques</a>
 	<p>
 		<?php 
 	// Penser à utiliser commentaire_datesuppression + les historiques
