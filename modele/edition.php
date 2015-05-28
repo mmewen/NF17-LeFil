@@ -135,3 +135,31 @@ function delete_assoc_rub_ssrub($id_old_assoc){
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql delete_assoc_rub_ssrub.</strong> Requête:<br>'.$req.'<br>'));
 	$res = pg_fetch_array($result);
 }
+
+function get_motscles(){ // redondante avec le modele Article
+	$req ="SELECT m.motsclefs_id, m.motsclefs_corps, i.indexart_article FROM MotsClefs m
+			LEFT JOIN Indexer_Article i
+			ON i.indexart_motclef=m.motsclefs_id;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_motscles_article.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_all ( $result );
+	return $array;
+}
+
+function get_article($id){
+	$req ="SELECT * FROM Article a WHERE a.article_id='".pg_escape_string($id)."';";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_article.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_array ( $result );
+	return $array;
+}
+
+function add_motcle_article($id_motcle, $id_article){
+	$req ="INSERT INTO Indexer_Article (indexart_dateindex, indexart_motclef, indexart_editeur, indexart_article)
+			VALUES ('".date("Y-m-d H:i:s")."',$id_motcle,".$_SESSION['Editeur'].",$id_article);";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql add_motcle_article.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function supprimer_motcle_article($id_motcle, $id_article){
+	$req ="DELETE FROM Indexer_Article
+			WHERE indexart_motclef=$id_motcle AND indexart_article=$id_article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql supprimer_motcle_article.</strong> Requête:<br>'.$req.'<br>'));
+}

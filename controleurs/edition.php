@@ -36,6 +36,15 @@ if (isset($_SESSION['Editeur']) && $_SESSION['Editeur'] > 0){ // équivaut à di
 			case 'modifier_mere_rubrique';
 				modifier_mere_rubrique();
 				break;
+			case 'editer_motcles_article':
+				editer_motcles_article();
+				break;
+			case 'ajouter_mot_cle':
+				ajouter_motcles_article();
+				break;
+			case 'supprimer_mot_cle':
+				supprimer_mot_cle_article();
+				break;
 			default:
 				defaut();
 				break;
@@ -140,4 +149,36 @@ function modifier_mere_rubrique(){
 		Messages::error("Erreur, il y a des paramètres manquants !");
 	}
 	editer_rubrique();
+}
+
+function editer_motcles_article(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		$id_article = $_GET['article'];
+		$article = get_article($id_article);
+		$motscles = get_motscles();
+		include('vues/edition/editer_motcles_article.php');
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants !");
+	}
+	
+}
+
+function ajouter_motcles_article(){
+	if (isset($_GET['article']) && !empty($_GET['article']) && isset($_POST['id_mot_cle']) && !empty($_POST['id_mot_cle'])) {
+		add_motcle_article(intval($_POST['id_mot_cle']), intval($_GET['article']));
+		Messages::info("Mot-clé correctement modifiée !");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants !");
+	}
+	editer_motcles_article();
+}
+
+function supprimer_mot_cle_article(){
+	if (isset($_GET['article']) && !empty($_GET['article']) && isset($_GET['id_mot_cle']) && !empty($_GET['id_mot_cle'])) {
+		supprimer_motcle_article(intval($_GET['id_mot_cle']), intval($_GET['article']));
+		Messages::info("Mot-clé correctement modifiée !");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants !");
+	}
+	editer_motcles_article();
 }
