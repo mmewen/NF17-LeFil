@@ -56,7 +56,7 @@ CREATE TABLE Moderateur (
 
 CREATE TABLE ComiteEditorial (
 	comedit_id SERIAL PRIMARY KEY,
-	groupenom VARCHAR(50) UNIQUE NOT NULL
+	comedit_groupenom VARCHAR(50) UNIQUE NOT NULL
 );
 
 \echo 'ComiteEditorial'
@@ -108,7 +108,7 @@ CREATE TABLE Texte (
 \echo 'Texte'
 
 CREATE TYPE enum_statut AS ENUM (
-	'A réviser', 'En rédaction', 'En relecture'
+	'A réviser', 'En redaction', 'En relecture'
 	'Rejeté', 'Soumis', 'Valide'
 );
 

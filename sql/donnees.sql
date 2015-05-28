@@ -15,7 +15,8 @@ INSERT INTO Personne (personne_login, personne_mail, personne_nom, personne_pren
 VALUES ('login4','login4@etu.utc.fr','nom4','prenom4');
 INSERT INTO Personne (personne_login, personne_mail, personne_nom, personne_prenom)
 VALUES ('login5','login5@etu.utc.fr','nom5','prenom5');
-
+INSERT INTO Personne (personne_login, personne_mail, personne_nom, personne_prenom)
+VALUES ('login6','login6@etu.utc.fr','nom6','prenom6');
 -- SELECT * FROM Personne;
 
 
@@ -28,6 +29,8 @@ VALUES (1,'login1');
 
 INSERT INTO Auteur (auteur_id, auteur_login)
 VALUES (2,'login2');
+INSERT INTO Auteur (auteur_id, auteur_login)
+VALUES (6,'login6');
 
 -- SELECT * FROM Auteur;
 
@@ -54,7 +57,7 @@ VALUES (5,'login5');
 
 
 
-INSERT INTO ComiteEditorial (groupenom)
+INSERT INTO ComiteEditorial (comedit_groupenom)
 VALUES ('Groupe Cool');
 
 -- SELECT * FROM ComiteEditorial;
@@ -84,7 +87,7 @@ VALUES ('Article nul',FALSE,TRUE,FALSE,1);
 
 INSERT INTO Article (article_titre, article_supprime, article_publie, 
 					 article_honneur, article_comite)
-VALUES ('Article bien',FALSE,FALSE,FALSE,1);
+VALUES ('Article bien',FALSE,TRUE,FALSE,1);
 
 -- SELECT * FROM Article;
 
@@ -122,12 +125,18 @@ VALUES ('Image belle',1,bytea_import('C:\wamp\www\nf17\images\pgsql-logo.png'));
 
 
 INSERT INTO Texte (texte_titre, texte_article, texte_corps)
-VALUES ('Texte beau',1,'Ceci est un article
-Il parle des fleurs et du beau temps
-Bonjour !');
+VALUES ('Texte beau',1,'Techno, toujours pareil,
+		 				BOUM BOUM dans les oreilles');
 INSERT INTO Texte (texte_titre, texte_article, texte_corps)
-VALUES ('Texte de conclusion',1,'Voilà, merci, cest cool.
-Au revoir !');
+VALUES ('Texte de conclusion',1,'Musique de défonce man,
+		 						 Pas de message normal,
+		 						 Rien à dire.');
+INSERT INTO Texte (texte_titre, texte_article, texte_corps)
+VALUES ('Texte du debut',2,'Si la purée a cramé,
+		 					Recouvre-la d''un chiffon mouillée,');
+INSERT INTO Texte (texte_titre, texte_article, texte_corps)
+VALUES ('Texte de fin',2,'Et fais couler du sel dessus,
+		 				  Pour absorber les senteurs de brûlé');
 
 -- Il suffit d'aller à la ligne pour rentrer le retour chariot dans la BD
 
@@ -137,6 +146,8 @@ Au revoir !');
 
 INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
 VALUES ('Valide',3,'2015-05-09 19:37:50');
+INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
+VALUES ('En redaction',3,'2015-05-09 19:37:50');
 
 -- SELECT * FROM Statut;
 
@@ -175,7 +186,10 @@ VALUES ('temps',3,'2015-06-20 19:37:50');
 
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
-VALUES ('2015-05-21 19:37:55',2,1,'En rédaction');
+VALUES ('2015-05-21 19:37:55',2,1,'En redaction');
+INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
+									modifstatut_article, modifstatut_statut)
+VALUES ('2015-05-28 19:40:55',6,2,'En redaction');
 
 -- + trigger
 
@@ -223,7 +237,7 @@ VALUES ('2015-05-19 19:37:55',3,'Valide',1);
 
 INSERT INTO Associer_Article_Article (assocartart_dateassoc, assocartart_article1,
 									  assocartart_article2, assocartart_editeur)
-VALUES ('2015-05-19 21:37:55',1,2,3);
+VALUES ('2015-05-19 21:37:55',2,1,3);
 
 -- SELECT * FROM Associer_Article_Article;
 
