@@ -72,7 +72,27 @@ function get_article_article($article_id,$titre){
 			FROM Associer_Article_Article, Article
 			WHERE (article_id=assocartart_article1 OR article_id=assocartart_article2) AND 
 				  (assocartart_article1=".$article_id." OR assocartart_article2=".$article_id.") AND article_titre<>'".$titre."';";
-	$result= pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req.'<br>');
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req.'<br>');
 	$array = pg_fetch_all ($result);
 	return $array;
+}
+
+function inserer_article($titre,$titretexte,$texte){
+	$req1="INSERT INTO Article (article_titre, article_supprime, article_publie, 
+					 article_honneur, article_comite)
+		   VALUES ('".pg_escape_string($titre)."',FALSE,FALSE,FALSE,1) 
+		   RETURNING article_id;";
+	$result = pg_query($GLOBALS['bdd'], $req1) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req1.'<br>');
+	$id = pg_fetch_all ($result);
+	$date=date('Y-m-d G:i:s');
+
+	foreach($id as $id){
+		$req3="INSERT INTO Texte (texte_titre, texte_article, texte_corps)
+			   VALUES ('".pg_escape_string($titretexte)."',".intval($id['article_id']).",'".pg_escape_string($texte)."');";
+		$result = pg_query($GLOBALS['bdd'], $req3) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req3.'<br>');
+
+		$req4="INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif,modifstatut_auteur,modifstatut_article,modifstatut_statut)
+			   VALUES ('".$date."','".$GLOBALS['auteur_id']."',".intval($id['article_id']).",'En redaction');";
+	    $result = pg_query($GLOBALS['bdd'], $req4) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req4.'<br>');
+	}
 }

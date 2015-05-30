@@ -80,7 +80,7 @@ CREATE TABLE Rubrique (
 
 CREATE TABLE Article (
 	article_id SERIAL PRIMARY KEY,
-	article_titre VARCHAR(50),
+	article_titre VARCHAR(50) UNIQUE NOT NULL,
 	article_supprime BOOLEAN,
 	article_publie BOOLEAN,
 	article_honneur BOOLEAN,

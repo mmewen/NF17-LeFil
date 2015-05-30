@@ -17,6 +17,12 @@ if (isset($auteur_id) && $auteur_id > 0){ // équivaut à dire "l'utilisateur a 
 			case 'soumettre':
 				soumettre_article();
 				break;
+			case 'creer_article':
+				creer_article();
+				break;
+			case 'ajouter_article':
+				ajouter_article();
+				break;
 			default:
 				defaut();
 				break;
@@ -34,10 +40,20 @@ function defaut(){
 	include('vues/auteur/defaut.php');
 }
 
-function editer_article($id_article){
+function editer_article(){
 
 }
 
-function soumettre_article($id_article){
+function soumettre_article(){
 
+}
+
+function creer_article(){
+	include('vues/auteur/creer_article.php');
+}
+
+function ajouter_article(){
+	inserer_article($_POST["titre"],$_POST["titretexte"],$_POST["corps"]);
+	Messages::info('Article correctement ajouté !');
+	defaut();
 }

@@ -2,6 +2,8 @@
 	<h1>Gestion de vos articles</h1>
 </div>
 
+<a href="?module=auteur&page=creer_article">Créer un Article</a>
+
 <div class="page-header">
 	<h1>Liste des articles</h1>
 </div>
@@ -46,7 +48,7 @@
 					if ($supp == 't'){
 						echo "<span class='label label-danger'>Supprimé</span> ";
 					} else {
-						echo "<span class='label label-primary'>Disponible</span> ";
+						echo "<span class='label label-primary'>Pas supprimé</span> ";
 					}
 					
 					if ($honneur == 't'){
@@ -56,22 +58,26 @@
 					}
 
 					$article_rubrique=get_rubrique_article($art["modifstatut_article"]);
-
-					foreach($article_rubrique as $artrub){
-						echo('<br> Apparait dans la/les rubrique(s) : <a href="?module=article&page=rubriques&rubrique='.
-							  $artrub["assocartrub_rubrique"].'">'.$artrub["rubrique_nom"].'</a>');
+					
+					if($article_rubrique){
+						echo('<br> Apparait dans la/les rubrique(s) : ');
+							foreach($article_rubrique as $artrub){
+								echo('<a href="?module=article&page=rubriques&rubrique='.
+									  $artrub["assocartrub_rubrique"].'">'.$artrub["rubrique_nom"].'</a>');
+							}
 					}
 					
 					$article_liaison=get_article_article($art["modifstatut_article"],$titre);
 
-					echo('<br> Est lié à/aux article(s) : ');
-
-					foreach($article_liaison as $li){
-						if($li["assocartart_article1"]==$art["modifstatut_article"]){
-							echo('<a href="?module=article&page=afficher_article&article='.$li["assocartart_article2"].'"">'.$li["article_titre"].'</a> ');
-						}
-						if($li["assocartart_article2"]==$art["modifstatut_article"]){
-							echo('<a href="?module=article&page=afficher_article&article='.$li["assocartart_article1"].'"">'.$li["article_titre"].'</a> ');
+					if($article_liaison){
+						echo('<br> Est lié à/aux article(s) : ');
+						foreach($article_liaison as $li){
+							if($li["assocartart_article1"]==$art["modifstatut_article"]){
+								echo('<a href="?module=article&page=afficher_article&article='.$li["assocartart_article2"].'"">'.$li["article_titre"].'</a> ');
+							}
+							if($li["assocartart_article2"]==$art["modifstatut_article"]){
+								echo('<a href="?module=article&page=afficher_article&article='.$li["assocartart_article1"].'"">'.$li["article_titre"].'</a> ');
+							}
 						}
 					}
 					
