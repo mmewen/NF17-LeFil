@@ -5,6 +5,10 @@ tout les trucs à jours mais on peut faire autrement évidemment
 J'ai essayé de faire en sorte que la plupart des données aie un sens mais je garantis rien ^^
 */
 
+/* Pour que j'ai plus de problème caca avec les caractères bizarres */
+
+SET client_encoding='UTF8';
+
 INSERT INTO Personne (personne_login, personne_mail, personne_nom, personne_prenom)
 VALUES ('login1','login1@etu.utc.fr','nom1','prenom1');
 INSERT INTO Personne (personne_login, personne_mail, personne_nom, personne_prenom)
@@ -84,12 +88,19 @@ VALUES ('Rubrique Triste',3,'2015-05-08 21:37:50');
 INSERT INTO Article (article_titre, article_supprime, article_publie, 
 					 article_honneur, article_comite)
 VALUES ('Article nul',FALSE,TRUE,FALSE,1);
-
 INSERT INTO Article (article_titre, article_supprime, article_publie, 
 					 article_honneur, article_comite)
 VALUES ('Article bien',FALSE,TRUE,FALSE,1);
 
+INSERT INTO Article (article_titre, article_supprime, article_publie, 
+					 article_honneur, article_comite)
+VALUES ('Article moyen',FALSE,TRUE,FALSE,1);
+INSERT INTO Article (article_titre, article_supprime, article_publie, 
+					 article_honneur, article_comite)
+VALUES ('Article médiocre',FALSE,TRUE,FALSE,1);
+
 -- SELECT * FROM Article;
+
 
 /* 
 Fonction qui permet d'importer une image dans la base de donnée 
@@ -137,6 +148,15 @@ VALUES ('Texte du debut',2,'Si la purée a cramé,
 INSERT INTO Texte (texte_titre, texte_article, texte_corps)
 VALUES ('Texte de fin',2,'Et fais couler du sel dessus,
 		 				  Pour absorber les senteurs de brûlé');
+INSERT INTO Texte (texte_titre, texte_article, texte_corps)
+VALUES ('Texte de bizarre',3,'Les hommes se nourrissent d''animaux sauvages qu''ils chassent et de fruits qu''ils cueillent.
+						  On les appelle les chasseurs-cueilleurs.');
+INSERT INTO Texte (texte_titre, texte_article, texte_corps)
+VALUES ('Texte de hilarant',4,'30 giga ça prend beaucoup de place
+						  Mais ça veut pas dire que tu es grosse
+						  C''est mon amour pour toi qui prend toute la place
+						  Comme les disques durs qui saturent');
+
 
 -- Il suffit d'aller à la ligne pour rentrer le retour chariot dans la BD
 
@@ -148,6 +168,8 @@ INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
 VALUES ('Valide',3,'2015-05-09 19:37:50');
 INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
 VALUES ('En redaction',3,'2015-05-09 19:37:50');
+INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
+VALUES ('Soumis',3,'2015-05-09 19:37:50');
 
 -- SELECT * FROM Statut;
 
@@ -186,10 +208,28 @@ VALUES ('temps',3,'2015-06-20 19:37:50');
 
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
-VALUES ('2015-05-21 19:37:55',2,1,'En redaction');
+VALUES ('2015-05-28 19:37:55',2,1,'En redaction');
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
-VALUES ('2015-05-28 19:40:55',6,2,'En redaction');
+VALUES ('2015-05-28 19:45:55',6,2,'En redaction');
+INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
+									modifstatut_article, modifstatut_statut)
+VALUES ('2015-05-28 19:40:55',2,1,'Soumis');
+INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
+									modifstatut_article, modifstatut_statut)
+VALUES ('2015-05-28 19:42:55',2,1,'En redaction');
+INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
+									modifstatut_article, modifstatut_statut)
+VALUES ('2015-05-28 19:47:55',6,2,'Soumis');
+INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
+									modifstatut_article, modifstatut_statut)
+VALUES ('2015-05-28 19:35:55',2,1,'Soumis');
+INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
+									modifstatut_article, modifstatut_statut)
+VALUES ('2015-05-28 19:35:55',2,3,'En redaction');
+INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
+									modifstatut_article, modifstatut_statut)
+VALUES ('2015-05-28 19:35:55',6,4,'Soumis');
 
 -- + trigger
 
@@ -221,7 +261,16 @@ VALUES ('2015-05-22 20:37:50',3,2);
 
 INSERT INTO Associer_Article_Rubrique (assocartrub_dateassoc, assocartrub_article,
 									   assocartrub_rubrique, assocartrub_editeur)
-VALUES ('2015-05-23 20:37:50',1,1,3);
+VALUES ('2015-05-23 20:37:50',1,2,3);
+INSERT INTO Associer_Article_Rubrique (assocartrub_dateassoc, assocartrub_article,
+									   assocartrub_rubrique, assocartrub_editeur)
+VALUES ('2015-05-23 20:37:50',2,1,3);
+INSERT INTO Associer_Article_Rubrique (assocartrub_dateassoc, assocartrub_article,
+									   assocartrub_rubrique, assocartrub_editeur)
+VALUES ('2015-05-23 20:37:50',3,1,3);
+INSERT INTO Associer_Article_Rubrique (assocartrub_dateassoc, assocartrub_article,
+									   assocartrub_rubrique, assocartrub_editeur)
+VALUES ('2015-05-23 20:37:50',4,2,3);
 
 -- SELECT * FROM Associer_Article_Rubrique;
 
@@ -233,14 +282,32 @@ VALUES ('2015-05-19 19:37:55',3,'Valide',1);
 
 -- SELECT * FROM Modifier_Statut_Editeur;
 
+INSERT INTO Associer_Article_Article (assocartart_dateassoc, assocartart_article1,
+									  assocartart_article2, assocartart_editeur)
+VALUES ('2015-05-19 21:37:55',1,2,3);
+INSERT INTO Associer_Article_Article (assocartart_dateassoc, assocartart_article1,
+									  assocartart_article2, assocartart_editeur)
+VALUES ('2015-05-19 21:37:55',2,4,3);
+INSERT INTO Associer_Article_Article (assocartart_dateassoc, assocartart_article1,
+									  assocartart_article2, assocartart_editeur)
+VALUES ('2015-05-19 21:37:55',3,1,3);
+INSERT INTO Associer_Article_Article (assocartart_dateassoc, assocartart_article1,
+									  assocartart_article2, assocartart_editeur)
+VALUES ('2015-05-19 21:37:55',4,3,3);
 
 
+/*
 INSERT INTO Associer_Article_Article (assocartart_dateassoc, assocartart_article1,
 									  assocartart_article2, assocartart_editeur)
 VALUES ('2015-05-19 21:37:55',2,1,3);
-
+INSERT INTO Associer_Article_Article (assocartart_dateassoc, assocartart_article1,
+									  assocartart_article2, assocartart_editeur)
+VALUES ('2015-05-19 21:37:55',4,1,3);
+INSERT INTO Associer_Article_Article (assocartart_dateassoc, assocartart_article1,
+									  assocartart_article2, assocartart_editeur)
+VALUES ('2015-05-19 21:37:55',1,3,3);
+*/
 -- SELECT * FROM Associer_Article_Article;
-
 
 
 INSERT INTO Indexer_Article (indexart_dateindex, indexart_motclef, indexart_editeur,

@@ -84,9 +84,8 @@ Ouvrir SQL Shell et taper `\i C:/wamp/www/nf17/sql/reset.sql` pour remplir la ba
 Il y a des instructions intéressantes en commentaires dans le fichier sql/tables_vues
 
 ## TODO
-* check SQL à l'insertion dans le BD (dates par exemple)
-* Triggers pour toutes les mises à jour. Prendre exemple sur celui déjà fait
-* Envoyer un mail au groupe précédent pour éclaircir le fonctionnement des statuts
+* Finir le gros du site
+* Créer la table Créer_article
 
 ## Rendus
 * 3 requêtes compliquées + 1 trigger dans un fichier sql

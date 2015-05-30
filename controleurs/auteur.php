@@ -1,10 +1,10 @@
 <?php
 
-$id_auteur=$_SESSION['Auteur'];
+$auteur_id=$_SESSION['Auteur'];
 
 include("modele/auteur.php"); // on inclue le modèle (= toutes les fonctions php d'accès à la BDD et tout)
 
-if (isset($id_auteur) && $id_auteur > 0){ // équivaut à dire "l'utilisateur a un id d'auteur" donc "l'utilisateur est auteur"
+if (isset($auteur_id) && $auteur_id > 0){ // équivaut à dire "l'utilisateur a un id d'auteur" donc "l'utilisateur est auteur"
 	if (!empty($_GET['page'])) {
 		switch ( $_GET['page'] ){	
 			case 'editer_article':
@@ -30,7 +30,7 @@ if (isset($id_auteur) && $id_auteur > 0){ // équivaut à dire "l'utilisateur a 
 }
 
 function defaut(){
-	$articles=get_liste_articles_auteur();
+	$articles=get_article_auteur();
 	include('vues/auteur/defaut.php');
 }
 
