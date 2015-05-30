@@ -100,7 +100,7 @@ CREATE TABLE Image (
 
 CREATE TABLE Texte (
 	texte_id SERIAL PRIMARY KEY,
-	texte_titre VARCHAR(50) UNIQUE NOT NULL,
+	texte_titre VARCHAR(50) NOT NULL,
 	texte_article INTEGER NOT NULL REFERENCES Article(article_id),
 	texte_corps TEXT 
 );

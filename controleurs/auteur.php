@@ -23,6 +23,12 @@ if (isset($auteur_id) && $auteur_id > 0){ // équivaut à dire "l'utilisateur a 
 			case 'ajouter_article':
 				ajouter_article();
 				break;
+			case 'editer_article':
+				editer_article();
+				break;
+			case 'modifier_article':
+				modifier_article();
+				break;
 			default:
 				defaut();
 				break;
@@ -41,7 +47,26 @@ function defaut(){
 }
 
 function editer_article(){
+	$article=get_info_article($_GET['article']);
+	include('vues/auteur/editer_article.php');
+}
 
+function modifier_article(){
+	$nbarg=$_POST["nbarg"];
+	$titre=$_POST["titre"];
+
+
+	$modif=array(
+		"nbarg" => $nbarg,
+		"titre" => $titre//,
+		);
+	for($i=1;$i<=$nbarg;$i++){
+			$modif["titretexte".$i.""]=$_POST["titretexte".$i.""];
+			$modif["corps".$i.""]=$_POST["corps".$i.""];
+		}
+	update_article($modif);
+	Messages::info('Article correctement modifié');
+	defaut();
 }
 
 function soumettre_article(){

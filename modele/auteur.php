@@ -96,3 +96,65 @@ function inserer_article($titre,$titretexte,$texte){
 	    $result = pg_query($GLOBALS['bdd'], $req4) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req4.'<br>');
 	}
 }
+
+
+function update_article($modif){
+	$nbarg=$modif["nbarg"];
+	$titre=$modif["titre"];
+	
+	for($i=1;$i<=$nbarg;$i++){
+		$titretexte{$i}=$modif["titretexte".$i.""];
+		var_dump($titretexte{$i});
+		$corps{$i}=$modif["corps".$i.""];
+	}
+
+	$req1="UPDATE Article
+		  SET Article_titre='".$titre."'
+		  WHERE article_id=".$_GET['article'].";";
+	$result = pg_query($GLOBALS['bdd'], $req1) or die ('Erreur requête psql update_article. Requête:<br>'.$req1.'<br>');
+
+	for($i=1;$i<=$nbarg;$i++){
+		echo $titretexte{$i};
+	}
+
+	$req="SELECT texte_id
+		  FROM Texte
+		  WHERE texte_article=".$_GET['article'].";";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql update_article. Requête:<br>'.$req.'<br>');
+	$idtextes = pg_fetch_all ($result);
+	var_dump($idtextes);
+	foreach($idtextes as $id){
+		for($i=1;$i<=$nbarg;$i++){
+			var_dump($i);
+			$req="UPDATE Texte
+				  SET texte_titre='".$titretexte{$i}."',texte_corps='".$corps{$i}."'
+				  WHERE texte_article=".$id["texte_id"].";";
+			var_dump($req);
+			$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql update_article. Requête:<br>'.$req.'<br>');
+		}
+	}
+
+}
+
+
+function get_info_article($article_id){
+	$req1="SELECT article_titre, texte_titre, texte_corps
+		   FROM Article, Texte
+		   WHERE article_id=".$article_id." AND texte_article=".$article_id.";";
+	$result = pg_query($GLOBALS['bdd'], $req1) or die ('Erreur requête psql get_info_article. Requête:<br>'.$req1.'<br>');
+	$array = pg_fetch_all ($result);
+	foreach($array as $ar){
+		$info=array(
+			$info["id"]=$article_id,
+			"titre" => $ar["article_titre"]
+		);
+	}
+	$ligne=1;
+	foreach($array as $ar){
+		$info["titretexte".$ligne.""]=$ar["texte_titre"];
+		$info["corps".$ligne.""]=$ar["texte_corps"];
+		$ligne+=1;
+	}
+return $info;
+}
+	
