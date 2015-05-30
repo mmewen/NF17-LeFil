@@ -10,7 +10,7 @@
 <p>
 
 <div style="width:25%;">
-	<form action="?module=auteur&page=modifier_article" method="POST">
+	<form action="?module=auteur&page=ajouter_article" method="POST">
 		<div class="form-group">
 			<label for="titre">Titre:</label>
 			<input type="text" class="form-control" name="titre" id="titre">
