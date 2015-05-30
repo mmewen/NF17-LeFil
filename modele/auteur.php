@@ -104,7 +104,6 @@ function update_article($modif){
 	
 	for($i=1;$i<=$nbarg;$i++){
 		$titretexte{$i}=$modif["titretexte".$i.""];
-		var_dump($titretexte{$i});
 		$corps{$i}=$modif["corps".$i.""];
 	}
 
@@ -121,19 +120,22 @@ function update_article($modif){
 		  FROM Texte
 		  WHERE texte_article=".$_GET['article'].";";
 	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql update_article. Requête:<br>'.$req.'<br>');
+	
 	$idtextes = pg_fetch_all ($result);
-	var_dump($idtextes);
+	$i=1;
 	foreach($idtextes as $id){
-		for($i=1;$i<=$nbarg;$i++){
-			var_dump($i);
-			$req="UPDATE Texte
-				  SET texte_titre='".$titretexte{$i}."',texte_corps='".$corps{$i}."'
-				  WHERE texte_article=".$id["texte_id"].";";
-			var_dump($req);
-			$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql update_article. Requête:<br>'.$req.'<br>');
-		}
+		echo"id";
+		var_dump($id["texte_id"]);
+		echo"titre";
+		var_dump($titretexte{$i});
+		echo"corps";
+		var_dump($corps{$i});
+		$req="UPDATE Texte
+			  SET texte_titre='".$titretexte{$i}."',texte_corps='".$corps{$i}."'
+			  WHERE texte_id=".$id["texte_id"].";";
+		$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql update_article. Requête:<br>'.$req.'<br>');
+		$i++;
 	}
-
 }
 
 
