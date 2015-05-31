@@ -82,7 +82,12 @@ function defaut(){
 
 function gerer_articles(){
 	// on récupère les articles 'A_reviser', 'En_redaction', 'En_relecture', 'Rejete', 'Soumis', 'Valide'
-	$articles = get_tous_articles();
+	if (isset($_GET['trier_par']) && !empty($_GET['trier_par'])) {
+		$trier_par = $_GET['trier_par'];
+	} else {
+		$trier_par = "statut";
+	}
+	$articles = get_tous_articles($trier_par);
 	include('vues/edition/liste_articles.php');
 }
 

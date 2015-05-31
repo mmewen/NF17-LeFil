@@ -38,11 +38,22 @@ function ajouter_rubrique($rubrique){
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql ajouter_rubrique.</strong> Requête:<br>'.$req.'<br>'));
 }
 
-function get_tous_articles(){
-$req ="SELECT a.*, statut, auteur_login, comedit_groupenom
-		FROM Article a, vStatutArticles s, Auteur aut, vArticleAuteur vaa, ComiteEditorial c
-		WHERE s.article = a.article_id AND aut.auteur_id=vaa.auteur AND vaa.article=a.article_id AND a.article_comite=c.comedit_id
-		ORDER BY s.statut;";
+function get_tous_articles($tri){
+	switch ($tri) {
+		case 'statut':
+			$strtri = "s.statut";
+			break;
+		case 'auteur':
+			$strtri = "auteur_login ASC";
+			break;
+		case 'date':
+			$strtri = "date DESC";
+			break;
+	}
+	$req ="SELECT a.*, statut, auteur_login, comedit_groupenom, date
+			FROM Article a, vStatutArticles s, Auteur aut, vArticleAuteur vaa, ComiteEditorial c
+			WHERE s.article = a.article_id AND aut.auteur_id=vaa.auteur AND vaa.article=a.article_id AND a.article_comite=c.comedit_id
+			ORDER BY $strtri;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_tous_articles.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all ( $result );
 	return $array;
