@@ -2,13 +2,7 @@
 	<h1>Gestion des articles</h1>
 </div>
 
-<a href="?module=edition&page=editer_motcles_article&article=1">édition tags</a> 
-<a href="?module=edition&page=editer_rubrique_article&article=1">édition rubriques</a>
-<a href="?module=edition&page=editer_associations_articles&article=1">édition articles associés</a>
-
-
 <?php
-var_dump($articles);
 $previous_status = null;
 // Pour chaque catégorie d'article
 foreach ($articles as $article) {
@@ -49,7 +43,7 @@ foreach ($articles as $article) {
 		<?php
 	}?>
 	<li class="list-group-item">
-		<h4 class="list-group-item-heading"><?php echo($article["article_titre"].' - écrit par '.$article["auteur_login"].' - '); ?>
+		<h4 class="list-group-item-heading"><?php echo($article["article_titre"].' - écrit par '.$article["auteur_login"].' - comité éditorial : '.$article["comedit_groupenom"].' - '); ?>
 
 			<?php 
 
@@ -78,7 +72,20 @@ foreach ($articles as $article) {
 				?>
 		</h4>
 		<hr>
-		plouf
+
+		<a href="?module=edition&page=editer_motcles_article&article=<?php echo $article['article_id']; ?>">
+        	<button type="button" class="btn btn-sm btn-default">Gérer les mots-clés de l'article</button>
+		</a> 
+		<a href="?module=edition&page=editer_rubrique_article&article=<?php echo $article['article_id']; ?>">
+        	<button type="button" class="btn btn-sm btn-default">Éditer les rubriques mères</button>
+		</a>
+		<a href="?module=edition&page=editer_associations_articles&article=<?php echo $article['article_id']; ?>">
+        	<button type="button" class="btn btn-sm btn-default">Gérer les articles associés</button>
+		</a>
+		<a href="?module=edition&page=cfds&article=<?php echo $article['article_id']; ?>">
+        	<button type="button" class="btn btn-sm btn-primary">Changer de statut</button>
+		</a>
+        <button type="button" class="btn btn-sm btn-danger" onclick="alert('Pour l\'instant, ça marche pas :P mais \'faut avouer que le bouton est joli !');">Supprimer</button>
 	</li>
 	<?php
 }

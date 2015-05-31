@@ -39,9 +39,9 @@ function ajouter_rubrique($rubrique){
 }
 
 function get_tous_articles(){
-$req ="SELECT a.*, statut, auteur_login
-		FROM Article a, vStatutArticles s, Auteur aut, vArticleAuteur vaa
-		WHERE s.article = a.article_id AND aut.auteur_id=vaa.auteur AND vaa.article=a.article_id
+$req ="SELECT a.*, statut, auteur_login, comedit_groupenom
+		FROM Article a, vStatutArticles s, Auteur aut, vArticleAuteur vaa, ComiteEditorial c
+		WHERE s.article = a.article_id AND aut.auteur_id=vaa.auteur AND vaa.article=a.article_id AND a.article_comite=c.comedit_id
 		ORDER BY s.statut;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_tous_articles.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all ( $result );
