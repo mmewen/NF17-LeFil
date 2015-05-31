@@ -90,11 +90,11 @@ INSERT INTO Article (article_titre, article_supprime, article_publie,
 VALUES ('Article nul',FALSE,TRUE,FALSE,1);
 INSERT INTO Article (article_titre, article_supprime, article_publie, 
 					 article_honneur, article_comite)
-VALUES ('Article bien',FALSE,TRUE,FALSE,1);
+VALUES ('Article bien',FALSE,FALSE,FALSE,1);
 
 INSERT INTO Article (article_titre, article_supprime, article_publie, 
 					 article_honneur, article_comite)
-VALUES ('Article moyen',FALSE,TRUE,FALSE,1);
+VALUES ('Article moyen',FALSE,FALSE,FALSE,1);
 INSERT INTO Article (article_titre, article_supprime, article_publie, 
 					 article_honneur, article_comite)
 VALUES ('Article médiocre',FALSE,TRUE,FALSE,1);
@@ -165,9 +165,9 @@ VALUES ('Texte de hilarant',4,'30 giga ça prend beaucoup de place
 
 
 INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
-VALUES ('Validé',3,'2015-05-09 19:37:50');
+VALUES ('Valide',3,'2015-05-09 19:37:50');
 INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
-VALUES ('En rédaction',3,'2015-05-09 19:37:50');
+VALUES ('En_redaction',3,'2015-05-09 19:37:50');
 INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
 VALUES ('Soumis',3,'2015-05-09 19:37:50');
 
@@ -176,7 +176,7 @@ VALUES ('Soumis',3,'2015-05-09 19:37:50');
 
 
 INSERT INTO Remarque (remarque_corps, remarque_statut)
-VALUES ('Ceci est une remarque','Validé');
+VALUES ('Ceci est une remarque','Valide');
 
 -- SELECT * FROM Remarque;
 
@@ -208,16 +208,16 @@ VALUES ('temps',3,'2015-06-20 19:37:50');
 
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
-VALUES ('2015-05-28 19:37:55',2,1,'En rédaction');
+VALUES ('2015-05-28 19:37:55',2,1,'En_redaction');
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
-VALUES ('2015-05-28 19:45:55',6,2,'En rédaction');
+VALUES ('2015-05-28 19:45:55',6,2,'En_redaction');
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
 VALUES ('2015-05-28 19:40:55',2,1,'Soumis');
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
-VALUES ('2015-05-28 19:42:55',2,1,'En rédaction');
+VALUES ('2015-05-28 19:42:55',2,1,'En_redaction');
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
 VALUES ('2015-05-28 19:47:55',6,2,'Soumis');
@@ -226,7 +226,10 @@ INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 VALUES ('2015-05-28 19:35:55',2,1,'Soumis');
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
-VALUES ('2015-05-29 08:20:30',2,3,'En rédaction');
+VALUES ('2015-05-29 08:20:30',2,3,'En_redaction');
+INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
+									modifstatut_article, modifstatut_statut)
+VALUES ('2015-05-28 18:45:55',6,4,'En_redaction');
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
 VALUES ('2015-05-28 19:35:55',6,4,'Soumis');
@@ -278,13 +281,13 @@ VALUES ('2015-05-23 20:37:50',4,2,3);
 
 INSERT INTO Modifier_Statut_Editeur (modifstatedit_datemodif, modifstatedit_editeur,
 									 modifstatedit_statut, modifstatedit_article)
-VALUES ('2015-05-30 19:37:55',3,'Validé',1);
+VALUES ('2015-05-30 19:37:55',3,'Valide',1);
 INSERT INTO Modifier_Statut_Editeur (modifstatedit_datemodif, modifstatedit_editeur,
 									 modifstatedit_statut, modifstatedit_article)
-VALUES ('2015-05-25 19:37:55',3,'Validé',1);
+VALUES ('2015-05-25 19:37:55',3,'Valide',2);
 INSERT INTO Modifier_Statut_Editeur (modifstatedit_datemodif, modifstatedit_editeur,
 									 modifstatedit_statut, modifstatedit_article)
-VALUES ('2015-05-20 19:37:55',3,'Validé',1);
+VALUES ('2015-05-20 19:37:55',3,'Valide',3);
 
 -- SELECT * FROM Modifier_Statut_Editeur;
 

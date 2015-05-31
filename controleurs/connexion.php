@@ -11,6 +11,7 @@ if (!empty($_GET['page'])) {
 			verifier_connexion();
 			break;
 		default:
+			Messages::error('La page que vous demandez n\'existe pas !');
 			defaut();
 			break;
 	}

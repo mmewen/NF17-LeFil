@@ -17,6 +17,7 @@ if (!empty($_GET['page'])) {
 			rechercher();
 			break;
 		default:
+			Messages::error('La page que vous demandez n\'existe pas !');
 			defaut();
 			break;
 	}

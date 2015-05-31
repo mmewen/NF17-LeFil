@@ -32,6 +32,7 @@ if (isset($auteur_id) && $auteur_id > 0){ // équivaut à dire "l'utilisateur a 
 			case 'soumettre_article':
 				soumettre_article();
 			default:
+				Messages::error('La page que vous demandez n\'existe pas !');
 				defaut();
 				break;
 		}
