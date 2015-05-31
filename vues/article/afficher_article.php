@@ -13,10 +13,22 @@
 
 <strong>
 <p>
-	À FAIRE !<br>
-	Auteur<br>
-	Commité éditorial ?<br>
-	Articles associés<br>
+<br>
+	<h4>Auteur : <?php echo get_auteur($article["article_id"]); ?></h4>
+	Commité éditorial : <?php echo get_comite($article["article_id"]); ?><br>
+	Articles associés : 
+	<?php
+	$articles_asso = get_article_asso($article["article_id"],$article["article_titre"]);
+		foreach($articles_asso as $li){
+					if($li["assocartart_article1"]==$article["article_id"]){
+						echo('<a href="?module=article&page=afficher_article&article='.$li["assocartart_article2"].'"">'.$li["article_titre"].'</a> ');
+					}
+					if($li["assocartart_article2"]==$article["article_id"]){
+						echo('<a href="?module=article&page=afficher_article&article='.$li["assocartart_article1"].'"">'.$li["article_titre"].'</a> ');
+					}
+				}			
+	?>
+
 </p>
 </strong>
 

@@ -28,7 +28,7 @@ if ($articles_honneur){
 				?>
 				<a href="?module=article&page=afficher_article&article=<?php echo($article["article_id"]); ?>" class="list-group-item">
 					<h4 class="list-group-item-heading"><?php echo($article["article_titre"]); ?></h4>
-					<p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+					<p class="list-group-item-text"><?php echo get_intro_article($article["article_id"]) ?></p>
 				</a>
 				<?php
 				// echo nl2br($t["texte_corps"]);
@@ -49,7 +49,7 @@ echo ('<p>');
 		?>
 			<a href="?module=article&page=afficher_article&article=<?php echo($article["article_id"]); ?>" class="list-group-item">
 				<h4 class="list-group-item-heading"><?php echo($article["article_titre"]); ?></h4>
-				<p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+				<p class="list-group-item-text"><?php echo get_intro_article($article["article_id"]) ?></p>
 			</a>
 		<?php
 			// echo nl2br($t["texte_corps"]);

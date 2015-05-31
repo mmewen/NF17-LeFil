@@ -161,3 +161,49 @@ function get_articles_correspondants($recherche){
 	$array = pg_fetch_all ( $result );
 	return $array;
 }
+
+function get_intro_article($art){
+	$req="SELECT texte_corps FROM Texte WHERE texte_article='".$art."';";
+	$result = pg_query($GLOBALS['bdd'], $req);
+	$array = pg_fetch_array($result);
+	return substr($array["texte_corps"], 0, 50);
+}
+
+function get_auteur($art){
+	$req = "SELECT  modifstatut_auteur
+			FROM Modifier_Statut_Auteur
+			WHERE modifstatut_article = '".$art."';";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql 1 get_auteur. Requête:<br>'.$req.'<br>');
+	$array = pg_fetch_array($result);
+
+	$req1 = "SELECT personne_prenom, personne_nom FROM Personne WHERE personne_id =".$array["modifstatut_auteur"].";";
+	$result1 = pg_query($GLOBALS['bdd'], $req1) or die ('Erreur requête psql 2 get_auteur. Requête:<br>'.$req1.'<br>');
+	$array1 = pg_fetch_array($result1);
+	return $array1["personne_prenom"]." ".$array1["personne_nom"];
+}
+
+function get_comite($art){
+	//trouver l'éditeur puis le comité associé
+	$req = "SELECT  modifstatedit_editeur FROM Modifier_Statut_Editeur WHERE modifstatedit_article = '".$art."';";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql 1 get_auteur. Requête:<br>'.$req.'<br>');
+	$array = pg_fetch_array($result);
+	$req1 = "SELECT  compose_comite
+			FROM compose
+			WHERE compose_editeur = '".$array["modifstatedit_editeur"]."';";
+	$result1 = pg_query($GLOBALS['bdd'], $req1) or die ('Erreur requête psql 1 get_auteur. Requête:<br>'.$req1.'<br>');
+	$array1 = pg_fetch_array($result1);
+	$req2 = "SELECT comedit_groupenom FROM comiteeditorial WHERE comedit_id = ".$array1["compose_comite"].";";
+	$result2 = pg_query($GLOBALS['bdd'], $req2) or die ('Erreur requête psql 1 get_auteur. Requête:<br>'.$req2.'<br>');
+	$array2 = pg_fetch_array($result2);
+	return $array2["comedit_groupenom"];
+}
+
+function get_article_asso($art,$titre){
+	$req = "SELECT DISTINCT article_titre, assocartart_article1, assocartart_article2
+			FROM Associer_Article_Article, Article
+			WHERE (article_id=assocartart_article1 OR article_id=assocartart_article2) AND 
+				  (assocartart_article1=".$art." OR assocartart_article2=".$art.") AND article_titre<>'".$titre."';";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req.'<br>');
+	$array = pg_fetch_all ($result);
+	return $array;
+}
