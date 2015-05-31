@@ -67,25 +67,42 @@ foreach ($articles as $article) {
 					echo "<span class='label label-default'>Pas supprimé</span> ";
 				}
 
-				echo(' - <a href="?module=edition&page=editer_article&article='.$article["article_id"].'">Éditer</a></h4>');
-
 				?>
-		</h4>
-		<hr>
 
-		<a href="?module=edition&page=editer_motcles_article&article=<?php echo $article['article_id']; ?>">
-        	<button type="button" class="btn btn-sm btn-default">Gérer les mots-clés de l'article</button>
-		</a> 
-		<a href="?module=edition&page=editer_rubrique_article&article=<?php echo $article['article_id']; ?>">
-        	<button type="button" class="btn btn-sm btn-default">Éditer les rubriques mères</button>
-		</a>
-		<a href="?module=edition&page=editer_associations_articles&article=<?php echo $article['article_id']; ?>">
-        	<button type="button" class="btn btn-sm btn-default">Gérer les articles associés</button>
-		</a>
-		<a href="?module=edition&page=cfds&article=<?php echo $article['article_id']; ?>">
-        	<button type="button" class="btn btn-sm btn-primary">Changer de statut</button>
-		</a>
-        <button type="button" class="btn btn-sm btn-danger" onclick="alert('Pour l\'instant, ça marche pas :P mais \'faut avouer que le bouton est joli !');">Supprimer</button>
+			<a id="truc" style=" color:gray; font-size:10px; margin-left: 20px; cursor:pointer;" onclick="$($(this).parent()[0]).next().slideToggle();">
+				Afficher/cacher les options
+			</a>
+		</h4>
+		<p class="options" style="display: none;">
+			<br>
+			<a href="?module=edition&page=editer_motcles_article&article=<?php echo $article['article_id']; ?>">
+	        	<button type="button" class="btn btn-sm btn-default">Gérer les mots-clés de l'article</button>
+			</a> 
+			<a href="?module=edition&page=editer_rubrique_article&article=<?php echo $article['article_id']; ?>">
+	        	<button type="button" class="btn btn-sm btn-default">Éditer les rubriques mères</button>
+			</a>
+			<a href="?module=edition&page=editer_associations_articles&article=<?php echo $article['article_id']; ?>">
+	        	<button type="button" class="btn btn-sm btn-default">Gérer les articles associés</button>
+			</a>
+			<?php
+			if ($article["article_honneur"] != 't'){?>
+				<a href="?module=edition&page=fvrgsgfcdvsb&article=<?php echo $article['article_id']; ?>">
+		        	<button type="button" class="btn btn-sm btn-default">Mettre à l'honneur</button>
+				</a><?php
+			} else {?>
+				<a href="?module=edition&page=fvrgsgfcdvsb&article=<?php echo $article['article_id']; ?>">
+		        	<button type="button" class="btn btn-sm btn-default">Ne plus mettre à l'honneur</button>
+				</a><?php
+			}
+			?>
+			<a href="?module=edition&page=cfds&article=<?php echo $article['article_id']; ?>">
+	        	<button type="button" class="btn btn-sm btn-success">Editer</button>
+			</a>
+			<a href="?module=edition&page=cfds&article=<?php echo $article['article_id']; ?>">
+	        	<button type="button" class="btn btn-sm btn-primary">Changer de statut</button>
+			</a>
+	        <button type="button" class="btn btn-sm btn-danger" onclick="alert('Pour l\'instant, ça marche pas :P mais \'faut avouer que le bouton est joli !');">Supprimer</button>
+        </p>
 	</li>
 	<?php
 }
