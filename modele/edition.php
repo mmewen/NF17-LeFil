@@ -177,11 +177,11 @@ function supprimer_motcle_article($id_motcle, $id_article){
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql supprimer_motcle_article.</strong> Requête:<br>'.$req.'<br>'));
 }
 
-function get_articles_rubriques(){
-	$req ="SELECT r.rubrique_id, r.rubrique_nom, a.article_id
+function get_articles_rubriques($id_article){
+	$req ="SELECT DISTINCT r.rubrique_id, r.rubrique_nom, a.article_id
 			FROM Rubrique r
 			LEFT OUTER JOIN Associer_Article_Rubrique aar ON aar.assocartrub_rubrique=r.rubrique_id
-			LEFT OUTER JOIN Article a ON aar.assocartrub_article=a.article_id;";
+			LEFT OUTER JOIN Article a ON aar.assocartrub_article=a.article_id AND a.article_id=$id_article;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_articles_rubriques.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all ( $result );
 	return $array;

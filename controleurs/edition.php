@@ -211,7 +211,7 @@ function editer_rubrique_article(){
 	if (isset($_GET['article']) && !empty($_GET['article'])) {
 		$id_article = $_GET['article'];
 		$article = get_article($id_article);
-		$rubriques = get_articles_rubriques();
+		$rubriques = get_articles_rubriques($id_article);
 		include('vues/edition/editer_rubriques_article.php');
 	} else {
 		Messages::error("Erreur, il y a des paramètres manquants !");

@@ -104,19 +104,9 @@ Page editeur :
 
 	Liste des articles 
 
-		Titre
-
-		Statut
-
 		Lien vers page modif article
 
 		Lien vers page modifier statut article
-
-		Lien vers page ajout mots clefs article
-
-		Lien vers page associer article à rubrique ou sous rubrique
-
-		Lien vers page liaison d'article
 
 		Bouton mettre à l'honneur
 
@@ -130,29 +120,7 @@ Page modif article :
 
 Page modif statut article :
 
-	Liste déroulante avec les statuts existants 
-
-
-Page ajout mots clefs article :
-
-	Liste déroulante avec mots clefs existants
-
-
-Page associer article à rubrique :
-
-	liste déroulante avec rubriques existantes
-
-
-Page publication :
-
-	Liste des articles validés
-
-		Bouton publication
-
-
-Page liaison article :
-
-	Liste déroulante avec articles validés
+	Liste déroulante avec les statuts existants + publication (si déjà validé)
 
 
 Idée : Au lieu d'avoir une liste des articles avec toutes les actions disponibles à côté de chacun de ces articles mettre des liens directement vers 

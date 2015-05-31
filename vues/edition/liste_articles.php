@@ -104,9 +104,9 @@ function afficher_li_article($article, $trier_par){ ?>
 	<h1>Gestion des articles</h1>
 </div>
 Trier par
-<a href="?module=edition&page=gerer_articles&trier_par=auteur">auteur</a>,
-<a href="?module=edition&page=gerer_articles&trier_par=date">date</a>,
-<a href="?module=edition&page=gerer_articles&trier_par=statut">statut</a>.
+<?php if ($trier_par != "auteur") { ?><a href="?module=edition&page=gerer_articles&trier_par=auteur">auteur</a> <?php }; ?>
+<?php if ($trier_par != "date") { ?><a href="?module=edition&page=gerer_articles&trier_par=date">date</a> <?php }; ?>
+<?php if ($trier_par != "statut") { ?><a href="?module=edition&page=gerer_articles&trier_par=statut">statut</a> <?php }; ?>
 <?php
 $previous_status = null;
 // Pour chaque catégorie d'article
