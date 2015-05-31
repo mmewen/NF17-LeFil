@@ -16,14 +16,51 @@ function get_article_auteur(){
 }
 
 function get_historique_article_auteur($article_id){
-	$req="SELECT article_id, article_titre, article_supprime, article_publie, article_honneur, comedit_groupenom, modifstatut_statut, 
-	             modifstatut_datemodif
-		  FROM Article, ComiteEditorial, Modifier_Statut_Auteur
-          WHERE comedit_id=article_comite AND article_id=".$article_id."AND modifstatut_article=article_id AND modifstatut_auteur=".$GLOBALS['auteur_id']."
-          ORDER BY modifstatut_datemodif DESC;";
-    $result= pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_historique_article. Requête:<br>'.$req.'<br>');
+	$req="SELECT article_id, article_titre, article_supprime, article_publie, article_honneur, comedit_groupenom
+		  FROM Article, ComiteEditorial
+          WHERE comedit_id=article_comite AND article_id=".$article_id.";";
+    $result= pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_historique_article_auteur. Requête:<br>'.$req.'<br>');
 	$array = pg_fetch_all ($result);
-	return $array;
+	//echo"historique normal";
+	$info=array(
+		"article_id" => $array[0]["article_id"],
+		"titre" => $array[0]["article_titre"],
+		"supp" => $array[0]["article_supprime"],
+		"publie" => $array[0]["article_publie"],
+		"honneur" => $array[0]["article_honneur"],
+		"comite" => $array[0]["comedit_groupenom"]
+	);
+
+	
+	$req1="SELECT modifstatut_statut, modifstatut_datemodif
+		   FROM Modifier_Statut_Auteur
+		   WHERE modifstatut_article=".$article_id."
+		   ORDER BY modifstatut_datemodif ASC;";
+	$result1= pg_query($GLOBALS['bdd'], $req1) or die ('Erreur requête psql get_historique_article_auteur. Requête:<br>'.$req1.'<br>');
+	$array1=pg_fetch_all($result1);
+
+	$info["datecreation"]=$array1[0]["modifstatut_datemodif"];
+	$indicefinal=(count($array1)-1);
+	$statutauteur=$array1[$indicefinal]["modifstatut_statut"];
+	$datemodifauteur=$array1[$indicefinal]["modifstatut_datemodif"];
+
+	$req2="SELECT modifstatedit_statut, modifstatedit_datemodif
+		   FROM Modifier_Statut_Editeur
+		   WHERE modifstatedit_article=".$article_id."
+		   ORDER BY modifstatedit_datemodif DESC;";
+	$result2=pg_query($GLOBALS['bdd'], $req2) or die ('Erreur requête psql get_historique_article_auteur. Requête:<br>'.$req2.'<br>');
+	$array2=pg_fetch_all($result2);
+
+	$statutediteur=$array2[0]["modifstatedit_statut"];
+	$datemodifediteur=$array2[0]["modifstatedit_datemodif"];
+
+	if($datemodifauteur>$datemodifediteur){
+		$info["statut"]=$statutauteur;
+	} else {
+		$info["statut"]=$statutediteur;
+	}
+
+	return $info;
 }
 
 function get_texte_article($article_id){

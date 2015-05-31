@@ -226,7 +226,7 @@ INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 VALUES ('2015-05-28 19:35:55',2,1,'Soumis');
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
-VALUES ('2015-05-28 19:35:55',2,3,'En rédaction');
+VALUES ('2015-05-29 08:20:30',2,3,'En rédaction');
 INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur,
 									modifstatut_article, modifstatut_statut)
 VALUES ('2015-05-28 19:35:55',6,4,'Soumis');
@@ -278,7 +278,13 @@ VALUES ('2015-05-23 20:37:50',4,2,3);
 
 INSERT INTO Modifier_Statut_Editeur (modifstatedit_datemodif, modifstatedit_editeur,
 									 modifstatedit_statut, modifstatedit_article)
-VALUES ('2015-05-19 19:37:55',3,'Validé',1);
+VALUES ('2015-05-30 19:37:55',3,'Validé',1);
+INSERT INTO Modifier_Statut_Editeur (modifstatedit_datemodif, modifstatedit_editeur,
+									 modifstatedit_statut, modifstatedit_article)
+VALUES ('2015-05-25 19:37:55',3,'Validé',1);
+INSERT INTO Modifier_Statut_Editeur (modifstatedit_datemodif, modifstatedit_editeur,
+									 modifstatedit_statut, modifstatedit_article)
+VALUES ('2015-05-20 19:37:55',3,'Validé',1);
 
 -- SELECT * FROM Modifier_Statut_Editeur;
 
