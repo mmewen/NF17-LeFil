@@ -3,46 +3,91 @@
 </div>
 
 <?php
+$previous_status = null;
 // Pour chaque catégorie d'article
-?>
-	<div class="page-header">
-		<h1>Articles machin</h1>
-	</div>
-	<a href="?module=edition&page=editer_motcles_article&article=1">édition tags</a> 
-	<a href="?module=edition&page=editer_rubrique_article&article=1">édition rubriques</a>
-	<a href="?module=edition&page=editer_associations_articles&article=1">édition articles associés</a>
-	<p>
-		<?php 
-	// Penser à utiliser commentaire_datesuppression + les historiques
-		foreach ($comms as $com) {
-			echo('<h4>'.$com["commentaire_titre"].' - écrit par '.$com["lecteur_login"].' le '.$com["commentaire_datecreation"].
-				' sur l\'article <a href="?module=article&page=afficher_article&article='.$com['commentaire_article'].'">'.$com['article_titre'].'</a> - ');
+foreach ($articles as $article) {
+	if($previous_status != $article['statut'])
+	{
+		if(!empty($previous_status)){
+			echo ('</div>'); // ferme le div list-group
+		}
+		$previous_status = $article['statut'];
+		?>
+		<div class="page-header">
+			<h1> Article(s)
+				<?php
+				switch ($article['statut']) {
+					case 'En_redaction':
+						echo "en cours de redaction";
+						break;
+					case 'Soumis':
+						echo "soumis";
+						break;
+					case 'En_relecture':
+						echo "en relecture";
+						break;
+					case 'A_reviser':
+						echo "à réviser";
+						break;
+					case 'Rejete':
+						echo "rejeté(s)";
+						break;
+					case 'Valide':
+						echo "validé(s)";
+						break;
+				}
+				?>
+			</h1>
+		</div>
+		<div class="list-group">
+		<?php
+	}?>
+	<li class="list-group-item">
+		<h4 class="list-group-item-heading"><?php echo($article["article_titre"].' - écrit par '.$article["auteur_login"].' - comité éditorial : '.$article["comedit_groupenom"].' - '); ?>
 
-			if ($com["commentaire_masque"] == 't'){
-				echo "<span class='label label-primary'>Masqué</span> ";
-			} else {
-				echo "<span class='label label-default'>Affichable</span> ";
-			}
+			<?php 
 
-			if ($com["commentaire_enexergue"] == 't'){
-				echo "<span class='label label-info'>En exergue</span> ";
-			} else {
-				echo "<span class='label label-default'>Pas en exergue</span> ";
-			}
+				// Penser à utiliser les historiques
 
-			if ($com["commentaire_supprime"] == 't'){
-				echo "<span class='label label-warning'>Supprimé</span> ";
-			} else {
-				echo "<span class='label label-default'>Pas supprimé</span> ";
-			}
+				if ($article["article_publie"] == 't'){
+					echo "<span class='label label-primary'>Publié</span> ";
+				} else {
+					echo "<span class='label label-default'>Non publié</span> ";
+				}
 
-			echo(' - <a href="?module=moderation&page=editer_commentaire&commentaire='.$com["commentaire_id"].'">Éditer</a></h4>');
+				if ($article["article_honneur"] == 't'){
+					echo "<span class='label label-info'>À l'honneur</span> ";
+				} else {
+					echo "<span class='label label-default'>Pas à l'honneur</span> ";
+				}
 
-			?>
-			<div class="well">
-	        <p><?php echo(nl2br($com["commentaire_corps"])); ?></p>
-	      	</div><br><?php
-		}?>
-	</p>
+				if ($article["article_supprime"] == 't'){
+					echo "<span class='label label-warning'>Supprimé</span> ";
+				} else {
+					echo "<span class='label label-default'>Pas supprimé</span> ";
+				}
+
+				echo(' - <a href="?module=edition&page=editer_article&article='.$article["article_id"].'">Éditer</a></h4>');
+
+				?>
+		</h4>
+		<hr>
+
+		<a href="?module=edition&page=editer_motcles_article&article=<?php echo $article['article_id']; ?>">
+        	<button type="button" class="btn btn-sm btn-default">Gérer les mots-clés de l'article</button>
+		</a> 
+		<a href="?module=edition&page=editer_rubrique_article&article=<?php echo $article['article_id']; ?>">
+        	<button type="button" class="btn btn-sm btn-default">Éditer les rubriques mères</button>
+		</a>
+		<a href="?module=edition&page=editer_associations_articles&article=<?php echo $article['article_id']; ?>">
+        	<button type="button" class="btn btn-sm btn-default">Gérer les articles associés</button>
+		</a>
+		<a href="?module=edition&page=cfds&article=<?php echo $article['article_id']; ?>">
+        	<button type="button" class="btn btn-sm btn-primary">Changer de statut</button>
+		</a>
+        <button type="button" class="btn btn-sm btn-danger" onclick="alert('Pour l\'instant, ça marche pas :P mais \'faut avouer que le bouton est joli !');">Supprimer</button>
+	</li>
 	<?php
+}
 // end pour chaque type d'article
+?>

@@ -4,7 +4,7 @@
 <p><a href="?module=edition&page=gerer_articles">Retourner à la gestion des articles</a></p>
 <div class="page-header"><h1><?php echo($article['article_titre']); ?> - gestion des rubriques</h1>
 
-<div class="page-header"><h3>Rubriques actuelless</h3></div>
+<div class="page-header"><h3>Rubriques actuelles</h3></div>
 	<p style="opacity:0.5; font-style:italic;">Cliquez sur une des rubriques pour la supprimer</p>
 <?php
 

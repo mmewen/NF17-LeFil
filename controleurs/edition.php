@@ -64,6 +64,7 @@ if (isset($_SESSION['Editeur']) && $_SESSION['Editeur'] > 0){ // équivaut à di
 				supprimer_article_associe();
 				break;
 			default:
+				Messages::error('La page que vous demandez n\'existe pas !');
 				defaut();
 				break;
 		}
@@ -80,7 +81,7 @@ function defaut(){
 }
 
 function gerer_articles(){
-	// on récupère les articles "en rédaction", "soumis", "en relecture", "à réviser", "rejeté", "validé"
+	// on récupère les articles 'A_reviser', 'En_redaction', 'En_relecture', 'Rejete', 'Soumis', 'Valide'
 	$articles = get_tous_articles();
 	include('vues/edition/liste_articles.php');
 }

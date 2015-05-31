@@ -39,8 +39,10 @@ function ajouter_rubrique($rubrique){
 }
 
 function get_tous_articles(){
-	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
-			ORDER BY modifstatedit_datemodif DESC;";
+$req ="SELECT a.*, statut, auteur_login, comedit_groupenom
+		FROM Article a, vStatutArticles s, Auteur aut, vArticleAuteur vaa, ComiteEditorial c
+		WHERE s.article = a.article_id AND aut.auteur_id=vaa.auteur AND vaa.article=a.article_id AND a.article_comite=c.comedit_id
+		ORDER BY s.statut;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_tous_articles.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all ( $result );
 	return $array;
@@ -213,6 +215,3 @@ function delete_association_2articles($id_art_1, $id_art_2){
 				(assocartart_article1=$id_art_2 AND assocartart_article2=$id_art_1);";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql delete_rubrique_article.</strong> Requête:<br>'.$req.'<br>'));
 }
-// INSERT INTO Associer_Article_Article (assocartart_dateassoc, assocartart_article1,
-// 									  assocartart_article2, assocartart_editeur)
-// VALUES ('2015-05-19 21:37:55',1,2,3);

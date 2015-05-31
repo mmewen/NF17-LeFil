@@ -108,8 +108,8 @@ CREATE TABLE Texte (
 \echo 'Texte'
 
 CREATE TYPE enum_statut AS ENUM (
-	'A réviser', 'En rédaction', 'En relecture'
-	'Rejeté', 'Soumis', 'Validé'
+	'En_redaction', 'Soumis', 'En_relecture',
+	 'A_reviser', 'Rejete', 'Valide'
 );
 
 \echo 'ENUM_STATUT'
@@ -337,6 +337,28 @@ CREATE VIEW vCommentaireNonSupprime AS
 	WHERE Commentaire.commentaire_supprime='0';
 
 \echo 'vCommentaireNonSupprime'
+
+CREATE VIEW vStatutsArticles AS
+	SELECT modifstatut_datemodif date, modifstatut_article article, modifstatut_statut statut FROM modifier_statut_auteur
+	UNION
+	SELECT modifstatedit_datemodif date, modifstatedit_article article, modifstatedit_statut statut FROM modifier_statut_editeur
+	ORDER BY date DESC;
+
+\echo 'vStatutsArticles'
+
+CREATE VIEW vStatutArticles AS
+	SELECT * FROM vStatutsArticles
+	WHERE (date, article) IN
+	(SELECT max(date), article FROM vStatutsArticles GROUP BY article);
+
+\echo 'vStatutArticles'
+
+CREATE VIEW vArticleAuteur AS
+	SELECT DISTINCT modifstatut_auteur auteur, modifstatut_article article
+	FROM modifier_statut_auteur
+	WHERE modifstatut_statut='En_redaction';
+
+\echo 'vArticleAuteur'
 
 /* TRIGGERS */
 

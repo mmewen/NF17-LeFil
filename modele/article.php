@@ -57,7 +57,7 @@ function get_tag_article($id){
 function get_liste_articles_publies(){
 	// penser à modifier la fonction get_articles_publies_rubrique si besoin
 	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
-			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Validé'
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Valide'
 			ORDER BY modifstatedit_datemodif DESC;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_liste_articles_publies.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all ( $result );
@@ -66,7 +66,7 @@ function get_liste_articles_publies(){
 
 function get_liste_articles_publies_honneur(){
 	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
-			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND article_honneur=TRUE AND modifstatedit_statut='Validé'
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND article_honneur=TRUE AND modifstatedit_statut='Valide'
 			ORDER BY modifstatedit_datemodif DESC;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_liste_articles_publies.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all ( $result );
@@ -90,15 +90,26 @@ function get_ssrubriques_rubrique($rubriqueMere){
 function get_articles_publies_rubrique($rubriqueMere){
 	// penser à modifier la fonction get_liste_articles_publies si besoin
 	if (!empty($rubriqueMere)){
-		$req = "SELECT article_id, article_titre, article_honneur FROM Article, Modifier_Statut_Editeur, Associer_Article_Rubrique
-			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Validé'
-				AND assocartrub_article=article_id AND assocartrub_rubrique=$rubriqueMere
-			ORDER BY modifstatedit_datemodif DESC;";
+		$req = "SELECT a.article_id, a.article_titre, a.article_honneur FROM Article a, Modifier_Statut_Editeur s, Associer_Article_Rubrique ar
+			WHERE a.article_id=s.modifstatedit_article AND
+				a.article_supprime=FALSE AND
+				a.article_publie=TRUE AND
+				s.modifstatedit_datemodif IN
+					(select max(s1.modifstatedit_datemodif) from Modifier_Statut_Editeur s1 group by modifstatedit_article) AND
+				s.modifstatedit_statut='Valide' AND
+				ar.assocartrub_article=a.article_id AND
+				ar.assocartrub_rubrique=$rubriqueMere
+			ORDER BY s.modifstatedit_datemodif DESC;";
 	} else {
-		$req = "SELECT article_id, article_titre, article_honneur FROM Article, Modifier_Statut_Editeur
-			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Validé'
-				AND article_id NOT IN (SELECT assocartrub_article FROM Associer_Article_Rubrique)
-			ORDER BY modifstatedit_datemodif DESC;";
+		$req = "SELECT a.article_id, a.article_titre, a.article_honneur FROM Article a, Modifier_Statut_Editeur s
+			WHERE a.article_id=s.modifstatedit_article AND
+				a.article_supprime=FALSE AND
+				a.article_publie=TRUE AND
+				s.modifstatedit_datemodif IN
+					(select max(s1.modifstatedit_datemodif) from Modifier_Statut_Editeur s1 group by modifstatedit_article) AND
+				s.modifstatedit_statut='Valide' AND
+				a.article_id NOT IN (SELECT assocartrub_article FROM Associer_Article_Rubrique)
+			ORDER BY s.modifstatedit_datemodif DESC;";
 	}
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_articles_publies_rubrique.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all ( $result );
@@ -135,7 +146,7 @@ function get_articles_correspondants($recherche){
 	$req ="SELECT article_id, article_titre
 			FROM Article, Modifier_Statut_Editeur
 			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE
-					AND modifstatedit_statut='Validé' AND (
+					AND modifstatedit_statut='Valide' AND (
 						LOWER(article_titre) LIKE LOWER('%$recherche%')
 						OR article_id IN
 							(SELECT i.indexart_article FROM Indexer_Article i, MotsClefs m

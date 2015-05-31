@@ -24,6 +24,7 @@ if (isset($_SESSION['Moderateur']) && $_SESSION['Moderateur'] > 0){ // équivaut
 				supprimer();
 				break;
 			default:
+				Messages::error('La page que vous demandez n\'existe pas !');
 				defaut();
 				break;
 		}
