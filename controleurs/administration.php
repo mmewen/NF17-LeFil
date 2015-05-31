@@ -27,6 +27,7 @@ if(isset($admin_id) && $admin_id > 0){
 
 function defaut(){
 	$comptes = get_comptes();
+	$droits = get_droits();
 	include('vues/administration/defaut.php');
 }
 

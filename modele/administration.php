@@ -51,3 +51,17 @@ function get_id($login){
 	$array = pg_fetch_array($result);
 	return $array;
 }
+
+function get_droits(){
+	$req = "SELECT personne.*, admin_login, auteur_login, editeur_login, lecteur_login, moderateur_login 
+	FROM personne 
+	LEFT OUTER JOIN Administrateur ON admin_login=personne_login 
+	LEFT OUTER JOIN Auteur ON personne_login=auteur_login 
+	LEFT OUTER JOIN Editeur ON personne_login=editeur_login 
+	LEFT OUTER JOIN Lecteur ON personne_login=lecteur_login 
+	LEFT OUTER JOIN Moderateur ON personne_login=moderateur_login
+	ORDER BY personne_login;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_id.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_all($result);
+	return $array;
+}

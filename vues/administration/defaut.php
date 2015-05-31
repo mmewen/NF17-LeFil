@@ -18,8 +18,27 @@
 			if(is_bool($comptes)){
 				echo("<option value='NA'>Pas de comptes à afficher</option>");
 			} else {
+				$dr="";
+				$i = 0;
 				foreach($comptes as $co){
-					echo "<option value =".$co["personne_login"].">".$co["personne_login"]."</option>" ;
+					if(!empty($droits[$i]["admin_login"])){
+						$dr=$dr." Administrateur ";
+					}
+					if(!empty($droits[$i]["auteur_login"])){
+						$dr=$dr." Auteur ";
+					}
+					if(!empty($droits[$i]["editeur_login"])){
+						$dr=$dr." Editeur ";
+					}
+					if(!empty($droits[$i]["lecteur_login"])){
+						$dr=$dr." Lecteur ";
+					}
+					if(!empty($droits[$i]["moderateur_login"])){
+						$dr=$dr." Moderateur ";
+					}
+						echo "<option value =".$co["personne_login"].">".$co["personne_login"]." - ".$dr."</option>" ;
+						$i++;
+						$dr = "";
 				}
 			}
 			?>
