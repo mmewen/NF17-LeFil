@@ -9,6 +9,10 @@ if(isset($admin_id) && $admin_id > 0){
 		switch ( $_GET['page'] ){ 
 			case 'creer_compte': creer_compte(); 
 				break; 
+			case 'ajouter_compte' : ajouter_compte();
+				break;
+			case 'modif_compte': modif_compte();
+				break;
 			default: defaut(); 
 				break; 
 			} 
@@ -31,22 +35,23 @@ function creer_compte(){
 }
 
 function ajouter_compte(){
-	$compte = create_account($_POST["login"],$_POST["mail"],$_POST["prenom"],$_POST["nom"]);
+	create_account($_POST["login"],$_POST["mail"],$_POST["nom"],$_POST["prenom"]);
+	$ID = get_id($_POST["login"]);
 	switch($_POST["type"]){
 		case "L" :
-			create_account_lecteur($compte,$_POST["login"]);
+			create_account_lecteur($ID["personne_id"],$_POST["login"]);
 			break;
 		case "A" :
-			create_account_auteur($compte,$_POST["login"]);
+			create_account_auteur($ID["personne_id"],$_POST["login"]);
 			break;
 		case "E" :
-			create_account_aditeur($compte,$_POST["login"]);
+			create_account_editeur($ID["personne_id"],$_POST["login"]);
 			break;
 		case "M" :
-			create_account_moderateur($compte,$_POST["login"]);
+			create_account_moderateur($ID["personne_id"],$_POST["login"]);
 			break;
 		case "Ad" :
-			create_account_admin($compte,$_POST["login"]);
+			create_account_admin($ID["personne_id"],$_POST["login"]);
 			break;
 	}
 	Messages::info('Compte correctement créé !');
@@ -54,22 +59,22 @@ function ajouter_compte(){
 }
 
 function modif_compte(){
-	$id = get_id($_POST["compte"]);
+	$ID = get_id($_POST["compte"]);
 	switch($_POST["droit"]){
 		case "L" :
-			create_account_lecteur($id,$_POST["compte"]);
+			create_account_lecteur($ID["personne_id"],$_POST["compte"]);
 			break;
 		case "A" :
-			create_account_auteur($id,$_POST["compte"]);
+			create_account_auteur($ID["personne_id"],$_POST["compte"]);
 			break;
 		case "E" :
-			create_account_aditeur($id,$_POST["compte"]);
+			create_account_aditeur($ID["personne_id"],$_POST["compte"]);
 			break;
 		case "M" :
-			create_account_moderateur($id,$_POST["compte"]);
+			create_account_moderateur($ID["personne_id"],$_POST["compte"]);
 			break;
 		case "Ad" :
-			create_account_admin($id,$_POST["compte"]);
+			create_account_admin($ID["personne_id"],$_POST["compte"]);
 			break;
 	}
 	Messages::info('Droits correctement ajoutés !');

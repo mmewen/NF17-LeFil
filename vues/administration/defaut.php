@@ -18,10 +18,8 @@
 			if(is_bool($comptes)){
 				echo("<option value='NA'>Pas de comptes à afficher</option>");
 			} else {
-				$i = 0;
 				foreach($comptes as $co){
-					echo "<option value =".$co[$i]["personne_login"].">".$co[$i]["personne_login"]."</option>" ;
-					$i++;
+					echo "<option value =".$co["personne_login"].">".$co["personne_login"]."</option>" ;
 				}
 			}
 			?>
