@@ -5,7 +5,17 @@ $admin_id=$_SESSION['Administrateur'];
 include("modele/administration.php");
 
 if(isset($admin_id) && $admin_id > 0){
-	defaut();
+	if (!empty($_GET['page'])) { 
+		switch ( $_GET['page'] ){ 
+			case 'creer_compte': creer_compte(); 
+				break; 
+			default: defaut(); 
+				break; 
+			} 
+			} 
+			else { 
+				defaut(); 
+			}
 } else {
 	Messages::error("Page inaccessible avec vos droits actuels");
 	include('controleurs/accueil.php');

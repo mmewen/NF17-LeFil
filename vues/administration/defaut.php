@@ -5,7 +5,7 @@
 <a href="?module=administration&page=creer_compte"> Créer un compte </a>	
 
 <div class="page-header">
-	<h1>Liste des comptes</h1>
+	<h1>Modification des droits</h1>
 </div>
 
 <p>
@@ -15,16 +15,16 @@
 			<label for="compte">Comptes : </label>
 			<select name="compte" id="compte">
 			<?php
-			$comptes = get_comptes();
 			if(is_bool($comptes)){
 				echo("<option value='NA'>Pas de comptes à afficher</option>");
 			} else {
+				$i = 0;
 				foreach($comptes as $co){
-					//$l = $co["personne_login"];
-					echo "<option value =".$co.">$l</option>";			//DECONNE !!
+					echo "<option value =".$co[$i]["personne_login"].">".$co[$i]["personne_login"]."</option>" ;
+					$i++;
 				}
 			}
-				?>
+			?>
 			</select>
 		</div>
 			<div class = "form-group">
