@@ -11,7 +11,7 @@
 
 <div style="width:25%;">
 	<?php
-	echo "<form action='?module=auteur&page=modifier_article&article=".$_GET['article']."' method='POST'>"
+	echo "<form action='?module=auteur&page=modifier_article&article=".$_GET['article']."' method='POST'>";
 	?>
 		<div class="form-group">
 			<label for="titre">Titre:</label>

@@ -98,6 +98,9 @@
 			        	</p>
 			      	</div><br>
 				<?php
+					if($statut=='En rédaction'||$statut=='A réviser'){
+						echo "<a href='?module=auteur&page=soumettre_article&article=".$hist["article_id"]."'><span class='btn btn-lg btn-default'>Soumettre</span></a> ";
+					}
 				}
 				$ligne=$ligne+1;
 			}

@@ -57,7 +57,7 @@ function get_tag_article($id){
 function get_liste_articles_publies(){
 	// penser à modifier la fonction get_articles_publies_rubrique si besoin
 	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
-			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Valide'
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Validé'
 			ORDER BY modifstatedit_datemodif DESC;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_liste_articles_publies.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all ( $result );
@@ -66,7 +66,7 @@ function get_liste_articles_publies(){
 
 function get_liste_articles_publies_honneur(){
 	$req ="SELECT article_id, article_titre FROM Article, Modifier_Statut_Editeur
-			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND article_honneur=TRUE AND modifstatedit_statut='Valide'
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND article_honneur=TRUE AND modifstatedit_statut='Validé'
 			ORDER BY modifstatedit_datemodif DESC;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_liste_articles_publies.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all ( $result );
@@ -91,12 +91,12 @@ function get_articles_publies_rubrique($rubriqueMere){
 	// penser à modifier la fonction get_liste_articles_publies si besoin
 	if (!empty($rubriqueMere)){
 		$req = "SELECT article_id, article_titre, article_honneur FROM Article, Modifier_Statut_Editeur, Associer_Article_Rubrique
-			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Valide'
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Validé'
 				AND assocartrub_article=article_id AND assocartrub_rubrique=$rubriqueMere
 			ORDER BY modifstatedit_datemodif DESC;";
 	} else {
 		$req = "SELECT article_id, article_titre, article_honneur FROM Article, Modifier_Statut_Editeur
-			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Valide'
+			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE AND modifstatedit_statut='Validé'
 				AND article_id NOT IN (SELECT assocartrub_article FROM Associer_Article_Rubrique)
 			ORDER BY modifstatedit_datemodif DESC;";
 	}
@@ -135,7 +135,7 @@ function get_articles_correspondants($recherche){
 	$req ="SELECT article_id, article_titre
 			FROM Article, Modifier_Statut_Editeur
 			WHERE article_id=modifstatedit_article AND article_supprime=FALSE AND article_publie=TRUE
-					AND modifstatedit_statut='Valide' AND (
+					AND modifstatedit_statut='Validé' AND (
 						LOWER(article_titre) LIKE LOWER('%$recherche%')
 						OR article_id IN
 							(SELECT i.indexart_article FROM Indexer_Article i, MotsClefs m

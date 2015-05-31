@@ -86,13 +86,13 @@ function inserer_article($titre,$titretexte,$texte){
 	$id = pg_fetch_all ($result);
 	$date=date('Y-m-d G:i:s');
 
-	foreach($id as $id){
+	foreach($id as $id1){
 		$req3="INSERT INTO Texte (texte_titre, texte_article, texte_corps)
-			   VALUES ('".pg_escape_string($titretexte)."',".intval($id['article_id']).",'".pg_escape_string($texte)."');";
+			   VALUES ('".pg_escape_string($titretexte)."',".intval($id1['article_id']).",'".pg_escape_string($texte)."');";
 		$result = pg_query($GLOBALS['bdd'], $req3) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req3.'<br>');
 
 		$req4="INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif,modifstatut_auteur,modifstatut_article,modifstatut_statut)
-			   VALUES ('".$date."','".$GLOBALS['auteur_id']."',".intval($id['article_id']).",'En redaction');";
+			   VALUES ('".$date."','".$GLOBALS['auteur_id']."',".intval($id1['article_id']).",'En rédaction');";
 	    $result = pg_query($GLOBALS['bdd'], $req4) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req4.'<br>');
 	}
 }
@@ -124,12 +124,6 @@ function update_article($modif){
 	$idtextes = pg_fetch_all ($result);
 	$i=1;
 	foreach($idtextes as $id){
-		echo"id";
-		var_dump($id["texte_id"]);
-		echo"titre";
-		var_dump($titretexte{$i});
-		echo"corps";
-		var_dump($corps{$i});
 		$req="UPDATE Texte
 			  SET texte_titre='".$titretexte{$i}."',texte_corps='".$corps{$i}."'
 			  WHERE texte_id=".$id["texte_id"].";";
@@ -159,4 +153,11 @@ function get_info_article($article_id){
 	}
 return $info;
 }
-	
+
+function submit_article($article_id){
+	$date=date('Y-m-d G:i:s');
+
+	$req="INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur, modifstatut_article, modifstatut_statut)
+		  VALUES ('".$date."','".$GLOBALS["auteur_id"]."','".$article_id."','Soumis');";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql submit_article. Requête:<br>'.$req.'<br>');
+}

@@ -29,6 +29,8 @@ if (isset($auteur_id) && $auteur_id > 0){ // équivaut à dire "l'utilisateur a 
 			case 'modifier_article':
 				modifier_article();
 				break;
+			case 'soumettre_article':
+				soumettre_article();
 			default:
 				defaut();
 				break;
@@ -70,7 +72,9 @@ function modifier_article(){
 }
 
 function soumettre_article(){
-
+	$article_id=$_GET['article'];
+	submit_article($article_id);
+	Messages::info("L'article a bien été soumis");
 }
 
 function creer_article(){
