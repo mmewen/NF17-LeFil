@@ -71,11 +71,11 @@ function afficher_li_article($article, $trier_par){ ?>
 			</a>
 			<?php
 			if ($article["article_honneur"] != 't'){?>
-				<a href="?module=edition&page=fvrgsgfcdvsb&article=<?php echo $article['article_id']; ?>">
+				<a href="?module=edition&page=mettre_article_honneur&article=<?php echo $article['article_id']; ?>">
 		        	<button type="button" class="btn btn-sm btn-default">Mettre à l'honneur</button>
 				</a><?php
 			} else {?>
-				<a href="?module=edition&page=fvrgsgfcdvsb&article=<?php echo $article['article_id']; ?>">
+				<a href="?module=edition&page=enlever_article_honneur&article=<?php echo $article['article_id']; ?>">
 		        	<button type="button" class="btn btn-sm btn-default">Ne plus mettre à l'honneur</button>
 				</a><?php
 			}

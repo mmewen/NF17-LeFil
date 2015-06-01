@@ -63,6 +63,12 @@ if (isset($_SESSION['Editeur']) && $_SESSION['Editeur'] > 0){ // équivaut à di
 			case 'supprimer_assoc_article':
 				supprimer_article_associe();
 				break;
+			case 'mettre_article_honneur':
+				mettre_article_honneur();
+				break;
+			case 'enlever_article_honneur':
+				enlever_article_honneur();
+				break;
 			default:
 				Messages::error('La page que vous demandez n\'existe pas !');
 				defaut();
@@ -269,4 +275,24 @@ function supprimer_article_associe(){
 		Messages::error("Erreur, il y a des paramètres manquants pour supprimer_article_associe !");
 	}
 	editer_associations_articles();
+}
+
+function mettre_article_honneur(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		put_honneur_article($_GET['article']);
+		Messages::info("Article correctement mis à l'honneur !");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour mettre_article_honneur !");
+	}
+	gerer_articles();
+}
+
+function enlever_article_honneur(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		delete_honneur_article($_GET['article']);
+		Messages::info("Cet article ne sera plus mis à l'honneur !");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour enlever_article_honneur !");
+	}
+	gerer_articles();
 }

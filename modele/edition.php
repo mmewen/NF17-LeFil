@@ -226,3 +226,17 @@ function delete_association_2articles($id_art_1, $id_art_2){
 				(assocartart_article1=$id_art_2 AND assocartart_article2=$id_art_1);";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql delete_rubrique_article.</strong> Requête:<br>'.$req.'<br>'));
 }
+
+function put_honneur_article($id_article){
+	$req ="INSERT INTO Mettre_A_Honneur (misehonneur_datemisehonneur, misehonneur_editeur, misehonneur_article)
+			VALUES ('".date("Y-m-d H:i:s")."',".$_SESSION['Editeur'].",$id_article);";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql put_honneur_article.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function delete_honneur_article($id_article){
+	$req ="DELETE FROM Mettre_A_Honneur
+			WHERE misehonneur_article=$id_article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql 1 delete_honneur_article.</strong> Requête:<br>'.$req.'<br>'));
+	$req ="UPDATE article SET article_honneur=false WHERE article_id=$id_article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql 2 delete_honneur_article.</strong> Requête:<br>'.$req.'<br>'));
+}
