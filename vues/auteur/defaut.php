@@ -92,7 +92,12 @@
 			if($statut=='En_redaction'||$statut=='A_reviser'){
 				echo "<a href='?module=auteur&page=soumettre_article&article=".$article_historique["article_id"]."'><span class='btn btn-lg btn-default'>Soumettre</span></a> ";
 			}
-
+			if($supp=='f'){
+				echo "<a href='?module=auteur&page=supprimer_article&article=".$article_historique["article_id"]."'><span class='btn btn-lg btn-default'>Supprimer</span></a> ";
+			} else {
+				echo "<a href='?module=auteur&page=recuperer_article&article=".$article_historique["article_id"]."'><span class='btn btn-lg btn-default'>Recupérer</span></a> ";
+			}
+			
 			echo "<hr>";
 		}
 	}
