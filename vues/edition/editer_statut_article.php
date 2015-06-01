@@ -1,5 +1,5 @@
 <div class="jumbotron">
-	<h1>Gestion du statut de l'article <?php echo($article['article_titre']); ?></h1>
+	<h1>Gestion du statut de l'article <a href="?module=edition&page=consulter_article&article=<?php echo $article['article_id']; ?>"><?php echo $article['article_titre']; ?></a></h1>
 </div>
 
 <p><a href="?module=edition&page=gerer_articles">Retourner à la liste des articles</a> (sans enregistrer)</p>
@@ -43,9 +43,9 @@
 			<select class='form-control' name='statut' id='statut' onChange="if(this.value == 'Rejete' || this.value == 'A_reviser') { $('#divjustification').show();} else { $('#divjustification').hide();}; ">
 				<?php
 				if ($statut['statut'] =='En_relecture') {
+					echo("<option value='Valide'>valider</option>");
 					echo("<option value='A_reviser'>à réviser</option>");
 					echo("<option value='Rejete'>rejeter</option>");
-					echo("<option value='Valide'>valider</option>");
 				}
 
 				if ($statut['statut']=='Valide') {

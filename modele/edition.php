@@ -265,3 +265,55 @@ function set_en_relecture($id_article){
 		set_statut_article($id_article, "En_relecture");
 	}
 }
+
+function add_remarque($id_article, $remarque, $statut){
+	$req ="INSERT INTO Remarque (remarque_corps, remarque_date, remarque_article, remarque_statut)
+			VALUES ('".pg_escape_string($remarque)."', '".date("Y-m-d H:i:s")."', $id_article, '$statut');";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql add_remarque.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function get_remarques($id_article){
+	$req ="SELECT * FROM Remarque WHERE remarque_article=$id_article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_remarques.</strong> Requête:<br>'.$req.'<br>'));
+	return pg_fetch_all($result);
+}
+
+function get_texte_article($id_article){
+	$req ="SELECT t.texte_titre, t.texte_corps, t.texte_id FROM Texte t WHERE t.texte_article='".pg_escape_string($id_article)."'
+	ORDER BY t.texte_id ASC;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_texte_article.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_all ( $result );
+	return $array;
+}
+
+function get_auteur($id_article){
+	$req = "SELECT  personne_prenom, personne_nom
+			FROM Modifier_Statut_Auteur, Personne
+			WHERE modifstatut_article=$id_article AND personne_id=modifstatut_auteur;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_auteur. Requête:<br>'.$req.'<br>');
+	$array = pg_fetch_array($result);
+	return $array;
+}
+
+function update_article($id_article, $modif){
+	$nbarg=$modif["nbarg"];
+	$titre=$modif["titre"];
+	
+	for($i=0;$i<$nbarg;$i++){
+		$idtexte{$i} = $modif["idtexte".$i];
+		$titretexte{$i}=$modif["titretexte".$i];
+		$corps{$i}=$modif["corps".$i];
+	}
+
+	$req1="UPDATE Article
+		  SET Article_titre='".$titre."'
+		  WHERE article_id=".$id_article.";";
+	$result = pg_query($GLOBALS['bdd'], $req1) or die ('Erreur requête psql update_article. Requête:<br>'.$req1.'<br>');
+
+	for($i=0;$i<$nbarg;$i++){
+		$req="UPDATE Texte
+			  SET texte_titre='".$titretexte{$i}."', texte_corps='".$corps{$i}."'
+			  WHERE texte_id=".$idtexte{$i}.";";
+		$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql update_article. Requête:<br>'.$req.'<br>');
+	}
+}

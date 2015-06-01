@@ -181,8 +181,8 @@ VALUES ('Rejete',3,'2015-05-09 19:37:50');
 
 
 
-INSERT INTO Remarque (remarque_corps, remarque_statut)
-VALUES ('Ceci est une remarque','Valide');
+-- INSERT INTO Remarque (remarque_corps, remarque_statut)
+-- VALUES ('Ceci est une remarque','Valide');
 
 -- SELECT * FROM Remarque;
 
