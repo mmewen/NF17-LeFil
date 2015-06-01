@@ -38,6 +38,9 @@ if (isset($auteur_id) && $auteur_id > 0){ // équivaut à dire "l'utilisateur a 
 			case 'recuperer_article':
 				recuperer_article();
 				break;
+			case 'consulter_remarques':
+				consulter_remarques();
+				break;
 			default:
 				Messages::error('La page que vous demandez n\'existe pas !');
 				defaut();
@@ -57,7 +60,9 @@ function defaut(){
 }
 
 function editer_article(){
-	$article=get_info_article($_GET['article']);
+	$article_id=$_GET['article'];
+	modif_statut_article($article_id,'En_redaction');
+	$article=get_info_article($article_id);
 	include('vues/auteur/editer_article.php');
 }
 
@@ -65,14 +70,13 @@ function modifier_article(){
 	$nbarg=$_POST["nbarg"];
 	$titre=$_POST["titre"];
 
-
 	$modif=array(
 		"nbarg" => $nbarg,
-		"titre" => $titre//,
+		"titre" => $titre
 		);
 	for($i=1;$i<=$nbarg;$i++){
-			$modif["titretexte".$i.""]=$_POST["titretexte".$i.""];
-			$modif["corps".$i.""]=$_POST["corps".$i.""];
+			$modif["titretexte".$i]=$_POST["titretexte".$i];
+			$modif["corps".$i]=$_POST["corps".$i];
 		}
 	update_article($modif);
 	Messages::info('Article correctement modifié');
@@ -81,7 +85,7 @@ function modifier_article(){
 
 function soumettre_article(){
 	$article_id=$_GET['article'];
-	submit_article($article_id);
+	modif_statut_article($article_id,'Soumis');
 	Messages::info("L'article a bien été soumis");
 	defaut();
 }
@@ -108,4 +112,15 @@ function recuperer_article(){
 	desup_article($article_id);
 	Messages::info("L'article a bien été récupéré");
 	defaut();
+}
+
+function consulter_remarques(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		$article = get_article($_GET['article']);
+		$remarques = get_remarques($_GET['article']);
+		include("vues/auteur/liste_remarques.php");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour consulter_remarques !");
+		defaut();
+	}
 }
