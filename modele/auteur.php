@@ -198,3 +198,17 @@ function submit_article($article_id){
 		  VALUES ('".$date."','".$GLOBALS["auteur_id"]."','".$article_id."','Soumis');";
 	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql submit_article. Requête:<br>'.$req.'<br>');
 }
+
+function supp_article($article_id){
+	$req="UPDATE Article
+		  SET article_supprime=TRUE
+		  WHERE article_id=".$article_id.";";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql supp_article. Requête:<br>'.$req.'<br>');
+}
+
+function desup_article($article_id){
+	$req="UPDATE Article
+		  SET article_supprime=FALSE
+		  WHERE article_id=".$article_id.";";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql supp_article. Requête:<br>'.$req.'<br>');
+}

@@ -15,7 +15,7 @@
 <p>
 <br>
 	<h4>Auteur : <?php echo get_auteur($article["article_id"]); ?></h4>
-	Commité éditorial : <?php echo get_comite($article["article_id"]); ?><br>
+	Comité éditorial : <?php echo get_comite($article["article_id"]); ?><br>
 	Articles associés : 
 	<?php
 	$articles_asso = get_article_asso($article["article_id"],$article["article_titre"]);

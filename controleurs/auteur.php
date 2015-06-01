@@ -31,6 +31,13 @@ if (isset($auteur_id) && $auteur_id > 0){ // équivaut à dire "l'utilisateur a 
 				break;
 			case 'soumettre_article':
 				soumettre_article();
+				break;
+			case 'supprimer_article':
+				supprimer_article();
+				break;
+			case 'recuperer_article':
+				recuperer_article();
+				break;
 			default:
 				Messages::error('La page que vous demandez n\'existe pas !');
 				defaut();
@@ -76,6 +83,7 @@ function soumettre_article(){
 	$article_id=$_GET['article'];
 	submit_article($article_id);
 	Messages::info("L'article a bien été soumis");
+	defaut();
 }
 
 function creer_article(){
@@ -85,5 +93,19 @@ function creer_article(){
 function ajouter_article(){
 	inserer_article($_POST["titre"],$_POST["titretexte"],$_POST["corps"]);
 	Messages::info('Article correctement ajouté !');
+	defaut();
+}
+
+function supprimer_article(){
+	$article_id=$_GET['article'];
+	supp_article($article_id);
+	Messages::info("L'article a bien été supprimé");
+	defaut();
+}
+
+function recuperer_article(){
+	$article_id=$_GET['article'];
+	desup_article($article_id);
+	Messages::info("L'article a bien été récupéré");
 	defaut();
 }
