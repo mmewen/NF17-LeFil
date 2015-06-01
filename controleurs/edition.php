@@ -69,6 +69,12 @@ if (isset($_SESSION['Editeur']) && $_SESSION['Editeur'] > 0){ // équivaut à di
 			case 'enlever_article_honneur':
 				enlever_article_honneur();
 				break;
+			case 'changer_statut':
+				voir_statut();
+				break;
+			case 'modifier_statut_article':
+				modifier_statut_article();
+				break;
 			default:
 				Messages::error('La page que vous demandez n\'existe pas !');
 				defaut();
@@ -295,4 +301,55 @@ function enlever_article_honneur(){
 		Messages::error("Erreur, il y a des paramètres manquants pour enlever_article_honneur !");
 	}
 	gerer_articles();
+}
+
+function voir_statut(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		set_en_relecture($_GET['article']);
+		$statut = get_statut_article($_GET['article']);
+		$article = get_article($_GET['article']);
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour changer_statut !");
+	}
+	include ('vues/edition/editer_statut_article.php');
+}
+
+function modifier_statut_article(){
+	if (isset($_GET['article']) && !empty($_GET['article']) && isset($_POST['statut']) && !empty($_POST['statut'])) {
+		switch ($_POST['statut']) {
+			case 'A_reviser':
+				if (isset($_POST['justification']) && !empty($_POST['justification'])) {
+					// 
+					// set_statut_article($_GET['article'], "A_reviser");
+					Messages::info("Article marqué comme étant à réviser par l'auteur");
+				} else {
+					Messages::warn("Merci d'indiquer une justification pour cette révision !");
+				}
+				break;
+			case 'Rejete':
+				if (isset($_POST['justification']) && !empty($_POST['justification'])) {
+					// 
+					// set_statut_article($_GET['article'], "A_reviser");
+					Messages::info("Article rejeté");
+				} else {
+					Messages::warn("Merci d'indiquer une justification pour ce rejet !");
+				}
+				break;
+			case 'Valide':
+				set_statut_article($_GET['article'], "Valide");
+				Messages::info("Article correctement validé !");
+				break;
+			case 'Publier':
+				set_article_publie($_GET['article']);
+				Messages::info("Article correctement publié !");
+				break;
+			default:
+				Messages::info("Le statut transmis n'est pas correct.");
+				break;
+		}
+		
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour changer_statut !");
+	}
+	voir_statut();
 }

@@ -1,6 +1,6 @@
 <?php
 
-function afficher_li_article($article, $trier_par){ ?>
+function afficher_li_article($article, $trier_par){?>
 	<li class="list-group-item">
 		<h4 class="list-group-item-heading"><?php
 
@@ -79,14 +79,20 @@ function afficher_li_article($article, $trier_par){ ?>
 		        	<button type="button" class="btn btn-sm btn-default">Ne plus mettre à l'honneur</button>
 				</a><?php
 			}
+			if ( $article["statut"] != "En_redaction" ){?>
+				<a href="?module=edition&page=cfds&article=<?php echo $article['article_id']; ?>">
+		        	<button type="button" class="btn btn-sm btn-success">Editer</button>
+				</a>
+				<?php
+				if ( $article["article_publie"] == 'f' ) {
+					?>
+					<a href="?module=edition&page=changer_statut&article=<?php echo $article['article_id']; ?>">
+			        	<button type="button" class="btn btn-sm btn-primary">Changer de statut</button>
+					</a><?php
+				}
+			}
 			?>
-			<a href="?module=edition&page=cfds&article=<?php echo $article['article_id']; ?>">
-	        	<button type="button" class="btn btn-sm btn-success">Editer</button>
-			</a>
-			<a href="?module=edition&page=cfds&article=<?php echo $article['article_id']; ?>">
-	        	<button type="button" class="btn btn-sm btn-primary">Changer de statut</button>
-			</a>
-	        <button type="button" class="btn btn-sm btn-danger" onclick="alert('Pour l\'instant, ça marche pas :P mais \'faut avouer que le bouton est joli !');">Supprimer</button>
+	        <!-- <button type="button" class="btn btn-sm btn-danger" onclick="alert('Pour l\'instant, ça marche pas :P mais \'faut avouer que le bouton est joli !');">Supprimer</button> -->
         </p>
 	</li><?php
 }

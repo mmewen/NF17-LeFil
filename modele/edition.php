@@ -218,6 +218,7 @@ function add_association_2articles($id_art_1, $id_art_2){
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql add_rubrique_article.</strong> Requête:<br>'.$req.'<br>'));
 }
 
+
 function delete_association_2articles($id_art_1, $id_art_2){
 	$req ="DELETE FROM Associer_Article_Article
 			WHERE
@@ -239,4 +240,28 @@ function delete_honneur_article($id_article){
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql 1 delete_honneur_article.</strong> Requête:<br>'.$req.'<br>'));
 	$req ="UPDATE article SET article_honneur=false WHERE article_id=$id_article;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql 2 delete_honneur_article.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function get_statut_article($id_article){
+	$req ="SELECT * FROM vStatutArticles WHERE article=$id_article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_statut_article.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_array ( $result );
+	return $array;
+}
+
+function set_statut_article($id_article, $new_statut){
+	$req ="INSERT INTO Modifier_Statut_Editeur (modifstatedit_datemodif, modifstatedit_editeur, modifstatedit_statut, modifstatedit_article)
+			VALUES ('".date("Y-m-d H:i:s")."',".$_SESSION['Editeur'].",'$new_statut',$id_article);";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql set_statut_article.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function set_article_publie($id_article){
+	$req ="UPDATE Article SET article_publie=true WHERE article_id=$id_article;;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql set_article_publie.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function set_en_relecture($id_article){
+	if (get_statut_article($id_article)['statut'] == "Soumis") {
+		set_statut_article($id_article, "En_relecture");
+	}
 }

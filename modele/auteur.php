@@ -129,7 +129,7 @@ function inserer_article($titre,$titretexte,$texte){
 		$result = pg_query($GLOBALS['bdd'], $req3) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req3.'<br>');
 
 		$req4="INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif,modifstatut_auteur,modifstatut_article,modifstatut_statut)
-			   VALUES ('".$date."','".$GLOBALS['auteur_id']."',".intval($id1['article_id']).",'En rédaction');";
+			   VALUES ('".$date."','".$GLOBALS['auteur_id']."',".intval($id1['article_id']).",'En_redaction');";
 	    $result = pg_query($GLOBALS['bdd'], $req4) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req4.'<br>');
 	}
 }
