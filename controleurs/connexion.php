@@ -28,9 +28,12 @@ function defaut(){
 }
 
 function deconnexion(){
-	Messages::info("Déconnexion réussie !");
-	session_destroy();
-	include('vues/accueil.php');
+	if(session_destroy()){
+		header('refresh:0;/nf17/?deconnexion=1');
+	} else {
+		Messages::error("Une erreur est survenue lors de la déconnexion");
+		include('vues/accueil.php');
+	}
 }
 
 function verifier_connexion(){
@@ -45,8 +48,8 @@ function verifier_connexion(){
 		$_SESSION['Lecteur'] = is_lecteur($_SESSION['login']);
 		$_SESSION['Moderateur'] = is_moderateur($_SESSION['login']);
 
-		Messages::info("Connexion réussie !");
-		include('vues/accueil.php');
+		header('refresh:0;/nf17/?connexion=1');
+
 	} else {
 		// Identifiants incorrects
 		Messages::error("Identifiants/mot de passe incorrect(s) !");
