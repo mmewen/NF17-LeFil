@@ -1,0 +1,9 @@
+Module Article:
+	- compléter information (notament articles liés, auteur...)
+	- permettre aux Lecteurs de supprimer leur commentaire (/!\ soucis clé étrangère dans la table Supprimer_Commentaire)
+	- dans liste article et rubriques, afficher un extrait du texte (faire une fonction get_intro_article($art) )
+	- effectuer une recherche par mots-clés
+
+Module Administration
+	- création de compte utilisateur (puis redirection vers la pages de droits)
+	- page d'édition des droits d'un utilisateur (ajout de droits uniquement, pour éviter une  corruption de la base de donnée)

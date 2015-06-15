@@ -31,6 +31,9 @@ function create_account_editeur($id,$login){
 	$req = "INSERT INTO Editeur VALUES ('".$id."','".$login."');";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql create_account_editeur.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all($result);
+	$req = "INSERT INTO compose VALUES ('".$id."',1);";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql create_account_editeur.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_all($result);
 	return $array;
 }
 function create_account_moderateur($id,$login){
