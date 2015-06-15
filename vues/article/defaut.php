@@ -37,7 +37,7 @@ if ($articles_honneur){
 	</p>
 
 	<div class="page-header">
-		<h1>Pas à l'honneur</h1>
+		<h1>Tous les articles</h1>
 	</div>
 	<?php
 }
