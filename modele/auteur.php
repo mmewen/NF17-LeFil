@@ -129,7 +129,7 @@ function inserer_article($titre,$titretexte,$texte){
 		$result = pg_query($GLOBALS['bdd'], $req3) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req3.'<br>');
 
 		$req4="INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif,modifstatut_auteur,modifstatut_article,modifstatut_statut)
-			   VALUES ('".$date."','".$GLOBALS['auteur_id']."',".intval($id1['article_id']).",'En rédaction');";
+			   VALUES ('".$date."','".$GLOBALS['auteur_id']."',".intval($id1['article_id']).",'En_redaction');";
 	    $result = pg_query($GLOBALS['bdd'], $req4) or die ('Erreur requête psql get_article_article. Requête:<br>'.$req4.'<br>');
 	}
 }
@@ -140,18 +140,14 @@ function update_article($modif){
 	$titre=$modif["titre"];
 	
 	for($i=1;$i<=$nbarg;$i++){
-		$titretexte{$i}=$modif["titretexte".$i.""];
-		$corps{$i}=$modif["corps".$i.""];
+		$titretexte{$i}=$modif["titretexte".$i];
+		$corps{$i}=$modif["corps".$i];
 	}
 
 	$req1="UPDATE Article
-		  SET Article_titre='".$titre."'
+		  SET Article_titre='".pg_escape_string($titre)."'
 		  WHERE article_id=".$_GET['article'].";";
 	$result = pg_query($GLOBALS['bdd'], $req1) or die ('Erreur requête psql update_article. Requête:<br>'.$req1.'<br>');
-
-	for($i=1;$i<=$nbarg;$i++){
-		echo $titretexte{$i};
-	}
 
 	$req="SELECT texte_id
 		  FROM Texte
@@ -162,7 +158,7 @@ function update_article($modif){
 	$i=1;
 	foreach($idtextes as $id){
 		$req="UPDATE Texte
-			  SET texte_titre='".$titretexte{$i}."',texte_corps='".$corps{$i}."'
+			  SET texte_titre='".pg_escape_string($titretexte{$i})."',texte_corps='".pg_escape_string($corps{$i})."'
 			  WHERE texte_id=".$id["texte_id"].";";
 		$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql update_article. Requête:<br>'.$req.'<br>');
 		$i++;
@@ -191,10 +187,37 @@ function get_info_article($article_id){
 return $info;
 }
 
-function submit_article($article_id){
+function modif_statut_article($article_id,$statut){
 	$date=date('Y-m-d G:i:s');
 
 	$req="INSERT INTO Modifier_Statut_Auteur (modifstatut_datemodif, modifstatut_auteur, modifstatut_article, modifstatut_statut)
-		  VALUES ('".$date."','".$GLOBALS["auteur_id"]."','".$article_id."','Soumis');";
+		  VALUES ('".$date."','".$GLOBALS["auteur_id"]."','".$article_id."','".$statut."');";
 	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql submit_article. Requête:<br>'.$req.'<br>');
+}
+
+function supp_article($article_id){
+	$req="UPDATE Article
+		  SET article_supprime=TRUE
+		  WHERE article_id=".$article_id.";";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql supp_article. Requête:<br>'.$req.'<br>');
+}
+
+function desup_article($article_id){
+	$req="UPDATE Article
+		  SET article_supprime=FALSE
+		  WHERE article_id=".$article_id.";";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql supp_article. Requête:<br>'.$req.'<br>');
+}
+
+function get_remarques($id_article){
+	$req ="SELECT * FROM Remarque WHERE remarque_article=$id_article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_remarques.</strong> Requête:<br>'.$req.'<br>'));
+	return pg_fetch_all($result);
+}
+
+function get_article($id){
+	$req ="SELECT * FROM Article a WHERE a.article_id='".pg_escape_string($id)."';";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_article.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_array ( $result );
+	return $array;
 }

@@ -170,13 +170,19 @@ INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
 VALUES ('En_redaction',3,'2015-05-09 19:37:50');
 INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
 VALUES ('Soumis',3,'2015-05-09 19:37:50');
+INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
+VALUES ('En_relecture',3,'2015-05-09 19:37:50');
+INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
+VALUES ('A_reviser',3,'2015-05-09 19:37:50');
+INSERT INTO Statut (statut_type, statut_createur, statut_datecreation)
+VALUES ('Rejete',3,'2015-05-09 19:37:50');
 
 -- SELECT * FROM Statut;
 
 
 
-INSERT INTO Remarque (remarque_corps, remarque_statut)
-VALUES ('Ceci est une remarque','Valide');
+-- INSERT INTO Remarque (remarque_corps, remarque_statut)
+-- VALUES ('Ceci est une remarque','Valide');
 
 -- SELECT * FROM Remarque;
 

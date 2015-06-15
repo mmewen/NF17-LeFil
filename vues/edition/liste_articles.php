@@ -1,6 +1,6 @@
 <?php
 
-function afficher_li_article($article, $trier_par){ ?>
+function afficher_li_article($article, $trier_par){?>
 	<li class="list-group-item">
 		<h4 class="list-group-item-heading"><?php
 
@@ -70,23 +70,36 @@ function afficher_li_article($article, $trier_par){ ?>
 	        	<button type="button" class="btn btn-sm btn-default">Gérer les articles associés</button>
 			</a>
 			<?php
+
 			if ($article["article_honneur"] != 't'){?>
-				<a href="?module=edition&page=fvrgsgfcdvsb&article=<?php echo $article['article_id']; ?>">
+				<a href="?module=edition&page=mettre_article_honneur&article=<?php echo $article['article_id']; ?>">
 		        	<button type="button" class="btn btn-sm btn-default">Mettre à l'honneur</button>
 				</a><?php
 			} else {?>
-				<a href="?module=edition&page=fvrgsgfcdvsb&article=<?php echo $article['article_id']; ?>">
+				<a href="?module=edition&page=enlever_article_honneur&article=<?php echo $article['article_id']; ?>">
 		        	<button type="button" class="btn btn-sm btn-default">Ne plus mettre à l'honneur</button>
 				</a><?php
 			}
-			?>
-			<a href="?module=edition&page=cfds&article=<?php echo $article['article_id']; ?>">
-	        	<button type="button" class="btn btn-sm btn-success">Editer</button>
-			</a>
-			<a href="?module=edition&page=cfds&article=<?php echo $article['article_id']; ?>">
-	        	<button type="button" class="btn btn-sm btn-primary">Changer de statut</button>
-			</a>
-	        <button type="button" class="btn btn-sm btn-danger" onclick="alert('Pour l\'instant, ça marche pas :P mais \'faut avouer que le bouton est joli !');">Supprimer</button>
+			
+			if ( ($article["statut"] == "A_reviser") || ($article["statut"] == "Rejete") ){?>
+				<a href="?module=edition&page=consulter_remarques&article=<?php echo $article['article_id']; ?>">
+		        	<button type="button" class="btn btn-sm btn-default">Consulter les remarques sur cet article</button>
+				</a><?php
+			}
+
+			if ( $article["statut"] != "En_redaction" ){?>
+				<a href="?module=edition&page=consulter_article&article=<?php echo $article['article_id']; ?>">
+		        	<button type="button" class="btn btn-sm btn-success">Lire et éditer</button>
+				</a>
+				<?php
+				if ( $article["article_publie"] == 'f' ) {
+					?>
+					<a href="?module=edition&page=changer_statut&article=<?php echo $article['article_id']; ?>">
+			        	<button type="button" class="btn btn-sm btn-primary">Changer de statut</button>
+					</a><?php
+				}
+			} ?>
+	        <!-- <button type="button" class="btn btn-sm btn-danger" onclick="alert('Pour l\'instant, ça marche pas :P mais \'faut avouer que le bouton est joli !');">Supprimer</button> -->
         </p>
 	</li><?php
 }
@@ -104,9 +117,9 @@ function afficher_li_article($article, $trier_par){ ?>
 	<h1>Gestion des articles</h1>
 </div>
 Trier par
-<a href="?module=edition&page=gerer_articles&trier_par=auteur">auteur</a>,
-<a href="?module=edition&page=gerer_articles&trier_par=date">date</a>,
-<a href="?module=edition&page=gerer_articles&trier_par=statut">statut</a>.
+<?php if ($trier_par != "auteur") { ?><a href="?module=edition&page=gerer_articles&trier_par=auteur">auteur</a> <?php }; ?>
+<?php if ($trier_par != "date") { ?><a href="?module=edition&page=gerer_articles&trier_par=date">date</a> <?php }; ?>
+<?php if ($trier_par != "statut") { ?><a href="?module=edition&page=gerer_articles&trier_par=statut">statut</a> <?php }; ?>
 <?php
 $previous_status = null;
 // Pour chaque catégorie d'article

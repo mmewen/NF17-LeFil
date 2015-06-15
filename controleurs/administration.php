@@ -69,7 +69,7 @@ function modif_compte(){
 			create_account_auteur($ID["personne_id"],$_POST["compte"]);
 			break;
 		case "E" :
-			create_account_aditeur($ID["personne_id"],$_POST["compte"]);
+			create_account_editeur($ID["personne_id"],$_POST["compte"]);
 			break;
 		case "M" :
 			create_account_moderateur($ID["personne_id"],$_POST["compte"]);

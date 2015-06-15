@@ -28,8 +28,16 @@
 			$datecreation=$article_historique["datecreation"];
 			echo(' - créé le '.$datecreation);
 			echo(' - suivi par le comité éditorial "'.$comite.'"'.str_repeat('&nbsp;', 3).'');
-			echo"<span class='label label-default'>".$statut."</span> ";
-					
+			
+
+			if($statut=='A_reviser'){
+				echo"<span class='label label-warning'>".$statut."</span> ";
+			} elseif ($statut=='Rejete'){
+				echo"<span class='label label-danger'>".$statut."</span> ";
+			} else {
+				echo"<span class='label label-default'>".$statut."</span> ";
+			}
+
 			if ($publie == 't'){
 				echo "<span class='label label-primary'>Publié</span> ";
 			} else {
@@ -71,8 +79,15 @@
 					}
 				}
 			}
-					
-			echo('<br> <a href="?module=auteur&page=editer_article&article='.$article_historique["article_id"].'">Éditer</a></h4>');
+			echo"<br>";
+			if($statut!='Rejete' OR $publie=='f'){
+				echo(' <a href="?module=auteur&page=editer_article&article='.$article_historique["article_id"].'">Éditer</a> ');
+			}
+
+			if($statut=='A_reviser' OR $statut=='Rejete'){
+				echo('  <a href="?module=auteur&page=consulter_remarques&article='.$article_historique["article_id"].'">Remarques</a> ');
+			}
+			echo"</h4>";
 			?>
 
 			<div class="well">
@@ -92,7 +107,12 @@
 			if($statut=='En_redaction'||$statut=='A_reviser'){
 				echo "<a href='?module=auteur&page=soumettre_article&article=".$article_historique["article_id"]."'><span class='btn btn-lg btn-default'>Soumettre</span></a> ";
 			}
-
+			if($supp=='f'){
+				echo "<a href='?module=auteur&page=supprimer_article&article=".$article_historique["article_id"]."'><span class='btn btn-lg btn-default'>Supprimer</span></a> ";
+			} else {
+				echo "<a href='?module=auteur&page=recuperer_article&article=".$article_historique["article_id"]."'><span class='btn btn-lg btn-default'>Recupérer</span></a> ";
+			}
+			
 			echo "<hr>";
 		}
 	}

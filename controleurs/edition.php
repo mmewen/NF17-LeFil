@@ -63,6 +63,30 @@ if (isset($_SESSION['Editeur']) && $_SESSION['Editeur'] > 0){ // équivaut à di
 			case 'supprimer_assoc_article':
 				supprimer_article_associe();
 				break;
+			case 'mettre_article_honneur':
+				mettre_article_honneur();
+				break;
+			case 'enlever_article_honneur':
+				enlever_article_honneur();
+				break;
+			case 'changer_statut':
+				voir_statut();
+				break;
+			case 'modifier_statut_article':
+				modifier_statut_article();
+				break;
+			case 'consulter_remarques':
+				consulter_remarques();
+				break;
+			case 'consulter_article':
+				consulter_article();
+				break;
+			case 'editer_article':
+				editer_article();
+				break;
+			case 'modifier_article':
+				modifier_article();
+				break;
 			default:
 				Messages::error('La page que vous demandez n\'existe pas !');
 				defaut();
@@ -211,7 +235,7 @@ function editer_rubrique_article(){
 	if (isset($_GET['article']) && !empty($_GET['article'])) {
 		$id_article = $_GET['article'];
 		$article = get_article($id_article);
-		$rubriques = get_articles_rubriques();
+		$rubriques = get_articles_rubriques($id_article);
 		include('vues/edition/editer_rubriques_article.php');
 	} else {
 		Messages::error("Erreur, il y a des paramètres manquants !");
@@ -269,4 +293,135 @@ function supprimer_article_associe(){
 		Messages::error("Erreur, il y a des paramètres manquants pour supprimer_article_associe !");
 	}
 	editer_associations_articles();
+}
+
+function mettre_article_honneur(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		put_honneur_article($_GET['article']);
+		Messages::info("Article correctement mis à l'honneur !");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour mettre_article_honneur !");
+	}
+	gerer_articles();
+}
+
+function enlever_article_honneur(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		delete_honneur_article($_GET['article']);
+		Messages::info("Cet article ne sera plus mis à l'honneur !");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour enlever_article_honneur !");
+	}
+	gerer_articles();
+}
+
+function voir_statut(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		set_en_relecture($_GET['article']);
+		$statut = get_statut_article($_GET['article']);
+		$article = get_article($_GET['article']);
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour changer_statut !");
+	}
+	include ('vues/edition/editer_statut_article.php');
+}
+
+function modifier_statut_article(){
+	if (isset($_GET['article']) && !empty($_GET['article']) && isset($_POST['statut']) && !empty($_POST['statut'])) {
+		switch ($_POST['statut']) {
+			case 'A_reviser':
+				if (isset($_POST['justification']) && !empty($_POST['justification'])) {
+					add_remarque($_GET['article'], $_POST['justification'], $_POST['statut']);
+					set_statut_article($_GET['article'], $_POST['statut']);
+					Messages::info("Article marqué comme étant à réviser par l'auteur");
+				} else {
+					Messages::warn("Merci d'indiquer une justification pour cette révision !");
+				}
+				break;
+			case 'Rejete':
+				if (isset($_POST['justification']) && !empty($_POST['justification'])) {
+					add_remarque($_GET['article'], $_POST['justification'], $_POST['statut']);
+					set_statut_article($_GET['article'], $_POST['statut']);
+					Messages::info("Article rejeté");
+				} else {
+					Messages::warn("Merci d'indiquer une justification pour ce rejet !");
+				}
+				break;
+			case 'Valide':
+				set_statut_article($_GET['article'], "Valide");
+				Messages::info("Article correctement validé !");
+				break;
+			case 'Publier':
+				set_article_publie($_GET['article']);
+				Messages::info("Article correctement publié !");
+				break;
+			default:
+				Messages::info("Le statut transmis n'est pas correct.");
+				break;
+		}
+		voir_statut();
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour changer_statut !");
+		defaut();
+	}
+}
+
+function consulter_remarques(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		$article = get_article($_GET['article']);
+		$remarques = get_remarques($_GET['article']);
+		include("vues/edition/liste_remarques.php");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour consulter_remarques !");
+		defaut();
+	}
+}
+
+function consulter_article(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		set_en_relecture($_GET['article']);
+		$id = $_GET['article'];
+		$article = get_article($id);
+		$textes = get_texte_article($id);
+		$auteur = get_auteur($id);
+		include("vues/edition/consulter_article.php");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour consulter_article !");
+		defaut();
+	}
+}
+
+function editer_article(){
+	if (isset($_GET['article']) && !empty($_GET['article'])) {
+		$article = get_article($_GET['article']);
+		$textes = get_texte_article($_GET['article']);
+		include("vues/edition/editer_article.php");
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour editer_article !");
+		defaut();
+	}
+}
+
+function modifier_article(){
+	if (isset($_GET['article']) && !empty($_GET['article']) && isset($_POST['titre']) && !empty($_POST['titre']) && isset($_POST['nbarg']) && !empty($_POST['nbarg'])) {
+		$nbarg=$_POST["nbarg"];
+		$titre=$_POST["titre"];
+
+		$modif=array(
+			"nbarg" => $nbarg,
+			"titre" => $titre
+			);
+		for($i=0;$i<$nbarg;$i++){
+			$modif["idtexte".$i]=$_POST["idtexte".$i];
+			$modif["titretexte".$i]=$_POST["titretexte".$i];
+			$modif["corps".$i]=$_POST["corps".$i];
+		}
+
+		update_article($_GET['article'], $modif);
+		Messages::info('Article correctement modifié');
+		consulter_article();
+	} else {
+		Messages::error("Erreur, il y a des paramètres manquants pour editer_article !");
+		defaut();
+	}
 }

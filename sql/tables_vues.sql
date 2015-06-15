@@ -125,6 +125,8 @@ CREATE TABLE Statut (
 CREATE TABLE Remarque (
 	remarque_id SERIAL PRIMARY KEY,
 	remarque_corps TEXT NOT NULL,
+	remarque_date TIMESTAMP NOT NULL,
+	remarque_article INTEGER NOT NULL REFERENCES Article(article_id),
 	remarque_statut ENUM_STATUT NOT NULL REFERENCES Statut(statut_type)
 );
 

@@ -177,11 +177,11 @@ function supprimer_motcle_article($id_motcle, $id_article){
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql supprimer_motcle_article.</strong> Requête:<br>'.$req.'<br>'));
 }
 
-function get_articles_rubriques(){
-	$req ="SELECT r.rubrique_id, r.rubrique_nom, a.article_id
+function get_articles_rubriques($id_article){
+	$req ="SELECT DISTINCT r.rubrique_id, r.rubrique_nom, a.article_id
 			FROM Rubrique r
 			LEFT OUTER JOIN Associer_Article_Rubrique aar ON aar.assocartrub_rubrique=r.rubrique_id
-			LEFT OUTER JOIN Article a ON aar.assocartrub_article=a.article_id;";
+			LEFT OUTER JOIN Article a ON aar.assocartrub_article=a.article_id AND a.article_id=$id_article;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_articles_rubriques.</strong> Requête:<br>'.$req.'<br>'));
 	$array = pg_fetch_all ( $result );
 	return $array;
@@ -218,6 +218,7 @@ function add_association_2articles($id_art_1, $id_art_2){
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql add_rubrique_article.</strong> Requête:<br>'.$req.'<br>'));
 }
 
+
 function delete_association_2articles($id_art_1, $id_art_2){
 	$req ="DELETE FROM Associer_Article_Article
 			WHERE
@@ -225,4 +226,95 @@ function delete_association_2articles($id_art_1, $id_art_2){
 				OR
 				(assocartart_article1=$id_art_2 AND assocartart_article2=$id_art_1);";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql delete_rubrique_article.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function put_honneur_article($id_article){
+	$req ="INSERT INTO Mettre_A_Honneur (misehonneur_datemisehonneur, misehonneur_editeur, misehonneur_article)
+			VALUES ('".date("Y-m-d H:i:s")."',".$_SESSION['Editeur'].",$id_article);";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql put_honneur_article.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function delete_honneur_article($id_article){
+	$req ="DELETE FROM Mettre_A_Honneur
+			WHERE misehonneur_article=$id_article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql 1 delete_honneur_article.</strong> Requête:<br>'.$req.'<br>'));
+	$req ="UPDATE article SET article_honneur=false WHERE article_id=$id_article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql 2 delete_honneur_article.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function get_statut_article($id_article){
+	$req ="SELECT * FROM vStatutArticles WHERE article=$id_article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_statut_article.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_array ( $result );
+	return $array;
+}
+
+function set_statut_article($id_article, $new_statut){
+	$req ="INSERT INTO Modifier_Statut_Editeur (modifstatedit_datemodif, modifstatedit_editeur, modifstatedit_statut, modifstatedit_article)
+			VALUES ('".date("Y-m-d H:i:s")."',".$_SESSION['Editeur'].",'$new_statut',$id_article);";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql set_statut_article.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function set_article_publie($id_article){
+	$req ="UPDATE Article SET article_publie=true WHERE article_id=$id_article;;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql set_article_publie.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function set_en_relecture($id_article){
+	$statut = get_statut_article($id_article);
+	if ($statut['statut'] == "Soumis") {
+		set_statut_article($id_article, "En_relecture");
+	}
+}
+
+function add_remarque($id_article, $remarque, $statut){
+	$req ="INSERT INTO Remarque (remarque_corps, remarque_date, remarque_article, remarque_statut)
+			VALUES ('".pg_escape_string($remarque)."', '".date("Y-m-d H:i:s")."', $id_article, '$statut');";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql add_remarque.</strong> Requête:<br>'.$req.'<br>'));
+}
+
+function get_remarques($id_article){
+	$req ="SELECT * FROM Remarque WHERE remarque_article=$id_article;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_remarques.</strong> Requête:<br>'.$req.'<br>'));
+	return pg_fetch_all($result);
+}
+
+function get_texte_article($id_article){
+	$req ="SELECT t.texte_titre, t.texte_corps, t.texte_id FROM Texte t WHERE t.texte_article='".pg_escape_string($id_article)."'
+	ORDER BY t.texte_id ASC;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_texte_article.</strong> Requête:<br>'.$req.'<br>'));
+	$array = pg_fetch_all ( $result );
+	return $array;
+}
+
+function get_auteur($id_article){
+	$req = "SELECT  personne_prenom, personne_nom
+			FROM Modifier_Statut_Auteur, Personne
+			WHERE modifstatut_article=$id_article AND personne_id=modifstatut_auteur;";
+	$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql get_auteur. Requête:<br>'.$req.'<br>');
+	$array = pg_fetch_array($result);
+	return $array;
+}
+
+function update_article($id_article, $modif){
+	$nbarg=$modif["nbarg"];
+	$titre=$modif["titre"];
+	
+	for($i=0;$i<$nbarg;$i++){
+		$idtexte{$i} = $modif["idtexte".$i];
+		$titretexte{$i}=$modif["titretexte".$i];
+		$corps{$i}=$modif["corps".$i];
+	}
+
+	$req1="UPDATE Article
+		  SET Article_titre='".$titre."'
+		  WHERE article_id=".$id_article.";";
+	$result = pg_query($GLOBALS['bdd'], $req1) or die ('Erreur requête psql update_article. Requête:<br>'.$req1.'<br>');
+
+	for($i=0;$i<$nbarg;$i++){
+		$req="UPDATE Texte
+			  SET texte_titre='".$titretexte{$i}."', texte_corps='".$corps{$i}."'
+			  WHERE texte_id=".$idtexte{$i}.";";
+		$result = pg_query($GLOBALS['bdd'], $req) or die ('Erreur requête psql update_article. Requête:<br>'.$req.'<br>');
+	}
 }
