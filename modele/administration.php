@@ -1,7 +1,7 @@
 <?php
 
 function get_comptes(){
-	$req = "SELECT personne_login FROM Personne;";
+	$req = "SELECT personne_login FROM Personne ORDER BY personne_login;";
 	$result = pg_query($GLOBALS['bdd'], $req) or die (Messages::error('<strong>Erreur requête psql get_comptes.</strong> Requête : <br>'.$req.'<br>'));
 	$array = pg_fetch_all($result);
 	return $array;
