@@ -261,7 +261,8 @@ function set_article_publie($id_article){
 }
 
 function set_en_relecture($id_article){
-	if (get_statut_article($id_article)['statut'] == "Soumis") {
+	$statut = get_statut_article($id_article);
+	if ($statut['statut'] == "Soumis") {
 		set_statut_article($id_article, "En_relecture");
 	}
 }
