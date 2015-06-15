@@ -19,7 +19,7 @@
 				echo("<option value='NA'>Pas de comptes à afficher</option>");
 			} else {
 				$dr="";
-				$i = 1;
+				$i = 0;
 				foreach($comptes as $co){
 					if(!empty($droits[$i]["admin_login"])){
 						$dr=$dr." Administrateur ";
